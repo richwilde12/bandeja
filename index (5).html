@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bandeja · Northants padel crew</title>
+<meta name="theme-color" content="#0d3b8c"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="manifest" href="manifest.webmanifest">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Outfit:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#061631;--court:#0d3b8c;--court2:#1352c4;--lime:#d6ff3f;--mu:#9db4e0;--card:#0b2557;--red:#ff6b6b;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0)}
+*{box-sizing:inherit}
+body{margin:0;background:var(--navy);color:#fff;font:15px/1.4 Outfit,system-ui,sans-serif;background-image:linear-gradient(rgba(255,255,255,.05) 2px,transparent 2px),linear-gradient(90deg,rgba(255,255,255,.05) 2px,transparent 2px);background-size:100% 120px,50% 100%;background-position:0 40px,center}
+.wrap{max-width:560px;margin:0 auto;padding:16px 16px 40px}
+h1,h2,.big{font-family:"Barlow Condensed",Impact,sans-serif;text-transform:uppercase;margin:0;letter-spacing:.02em}
+h1{font-size:44px;font-weight:800;line-height:.95}h1 span{color:var(--lime)}h2{font-size:26px;margin:18px 0 8px}
+.sub{color:var(--mu);margin:6px 0 14px}
+.btn{font:800 18px "Barlow Condensed",Impact,sans-serif;text-transform:uppercase;letter-spacing:.04em;border:0;border-radius:999px;padding:12px 22px;background:var(--lime);color:var(--navy);cursor:pointer;text-decoration:none;display:inline-block}
+.btn.ghost{background:transparent;color:#fff;border:2px solid var(--court2)}.btn.sm{font-size:15px;padding:8px 16px}.btn.red{background:var(--red)}
+.panel,.card{background:var(--card);border:2px solid var(--court);border-radius:20px;padding:14px;margin-bottom:12px}
+.card{background:linear-gradient(160deg,var(--court2),var(--court));border-color:rgba(255,255,255,.2)}
+.when{font:800 30px/1 "Barlow Condensed",sans-serif;text-transform:uppercase}.price{font:800 28px "Barlow Condensed",sans-serif;color:var(--lime)}.price small{font:400 13px Outfit;color:#dbe7ff}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.chip{background:var(--navy);border:2px solid var(--court2);color:#fff;border-radius:14px;padding:8px 12px;font:inherit;cursor:pointer;text-align:center}.chip b{display:block;font:800 20px "Barlow Condensed",sans-serif}.chip small{color:var(--lime)}
+.pl{display:inline-block;background:var(--lime);color:var(--navy);border-radius:999px;padding:3px 12px;font-weight:700;margin:4px 6px 0 0}.pl.un{background:transparent;border:2px solid var(--lime);color:#fff;padding:1px 10px}.pl[data-a]{cursor:pointer}.pl.e{background:transparent;border:2px dashed rgba(255,255,255,.4);color:#dbe7ff}
+label{display:block;color:var(--mu);font-size:13px;margin:10px 0 4px;text-transform:uppercase;letter-spacing:.05em}
+input,select{width:100%;background:var(--navy);border:2px solid var(--court);color:#fff;border-radius:12px;padding:11px;font:inherit}input:focus,select:focus{outline:none;border-color:var(--lime)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.acts{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.ov{position:fixed;inset:0;background:rgba(3,10,25,.82);display:grid;place-items:end center;z-index:9}
+.md{background:var(--navy);border:2px solid var(--lime);border-radius:24px 24px 0 0;width:100%;max-width:520px;padding:20px 18px calc(20px + env(safe-area-inset-bottom,0));max-height:92vh;overflow:auto}
+@media(min-width:600px){.ov{place-items:center}.md{border-radius:24px}}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0));transform:translateX(-50%);background:var(--lime);color:var(--navy);font-weight:700;padding:12px 20px;border-radius:999px;z-index:20;max-width:90vw;box-shadow:0 8px 30px #0008}
+.mu{color:var(--mu);font-size:13px}
+.pills{display:flex;gap:8px;overflow-x:auto;padding:6px 0}.pill{flex:none;background:var(--navy);border:2px solid var(--court);color:#fff;border-radius:999px;padding:8px 14px;font:inherit;cursor:pointer;text-align:center;line-height:1.1}.pill small{display:block;color:var(--mu);font-size:11px}.pill.on{background:var(--lime);border-color:var(--lime);color:var(--navy)}.pill.on small{color:var(--navy)}
+.slot{display:grid;grid-template-columns:62px 1fr auto;gap:10px;align-items:center;width:100%;background:var(--navy);border:2px solid var(--court);border-radius:14px;padding:10px 12px;color:#fff;font:inherit;text-align:left;margin-top:8px;cursor:pointer}.slot:hover{border-color:var(--lime)}.slot b{font:800 24px "Barlow Condensed",sans-serif}.slot small{color:var(--mu);display:block}.slot .pp{font:800 22px "Barlow Condensed",sans-serif;color:var(--lime);text-align:right}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:5px;background:#777}.dot.g{background:#35d07f}.dot.a{background:#f4a62a}
+
+.ov{backdrop-filter:blur(6px);animation:fade .2s ease both}
+.md{position:relative;overflow:hidden;background:linear-gradient(160deg,var(--court2),var(--court));border:2px solid rgba(255,255,255,.22);border-bottom:0;box-shadow:0 -12px 50px #000a;animation:up .28s cubic-bezier(.2,.9,.3,1.1) both;
+background-image:linear-gradient(160deg,var(--court2),var(--court)),linear-gradient(rgba(255,255,255,.07) 2px,transparent 2px);background-size:auto,100% 90px;background-position:0 0,0 30px}
+@media(min-width:600px){.md{border-bottom:2px solid rgba(255,255,255,.22);animation-name:pop}}
+.md:before{content:"";position:absolute;right:-50px;top:-50px;width:140px;height:140px;border-radius:50%;background:var(--lime);opacity:.16;pointer-events:none}
+.md:after{content:"";display:block;position:absolute;top:8px;left:50%;width:44px;height:5px;margin-left:-22px;border-radius:9px;background:rgba(255,255,255,.35)}
+.md>*{position:relative;z-index:1}.md h2{font-size:36px;font-weight:800;margin:10px 0 4px!important;line-height:1}
+.md label{color:#dbe7ff}.md input,.md select{background:rgba(6,22,49,.85);border-color:rgba(255,255,255,.25);color-scheme:dark}
+.md .btn.ghost{border-color:rgba(255,255,255,.55)}.md .sub{color:#dbe7ff}
+.md .acts .btn{flex:1}
+.cl{position:absolute;top:12px;right:12px;z-index:2;width:36px;height:36px;border-radius:50%;border:2px solid rgba(255,255,255,.4);background:rgba(6,22,49,.5);color:#fff;font:700 20px/1 Outfit,sans-serif;cursor:pointer}
+#toast{display:flex;align-items:center;gap:10px;font:800 17px "Barlow Condensed",Impact,sans-serif;text-transform:uppercase;letter-spacing:.04em;border:2px solid var(--navy);animation:pop .25s cubic-bezier(.2,.9,.3,1.3) both}
+#toast:before{content:"";flex:none;width:18px;height:18px;border-radius:50%;background:var(--navy);box-shadow:inset -5px -5px 0 rgba(214,255,63,.25)}
+@keyframes fade{from{opacity:0}}@keyframes up{from{transform:translateY(60px);opacity:0}}@keyframes pop{from{transform:translate(-50%,10px) scale(.9);opacity:0}}
+.ov .md{animation-name:up}@media(min-width:600px){.ov .md{animation-name:fade}}
+@media(prefers-reduced-motion:reduce){.ov,.md,#toast{animation:none!important}}
+</style></head><body><div class="wrap">
+<div style="display:flex;align-items:center;gap:12px"><img src="icon.svg" width="54" height="54" alt=""><h1>Bandeja<span>.</span></h1></div>
+<p class="sub">Northants padel crew. Find a free court, propose a game, share it to WhatsApp, tap in.</p>
+<div id="join"></div>
+<div class="panel"><h2 style="margin-top:0">Find my court</h2><p class="mu" style="margin:0 0 6px">Pick when you want to play. I’ll rank the best venue, or show the closest options.</p><div class="g2"><div><label>Date</label><input id="bd" type="date"></div><div><label>Time</label><input id="bt" type="time" step="900" value="19:00"></div></div><div class="acts"><button class="btn" id="bgo">Find best court</button></div><div id="bres"></div></div>
+<div class="panel"><h2 style="margin-top:0">Free courts</h2><div class="pills" id="days"></div><div class="pills" id="tod"></div><div id="res"></div><p class="mu" id="health"></p><button class="btn ghost sm" id="man">Add a slot manually</button></div><div id="res"></div></div>
+<h2>My games</h2><div id="mine"></div>
+<p class="mu" style="margin-top:24px">Name: <b id="who"></b> · <a href="#" id="chg" style="color:var(--lime)">change</a> · <a href="#" id="setb" style="color:var(--lime)">app web address</a></p>
+</div><div id="toast" hidden></div>
+<script>
+const VEN=[
+{id:'grendon',map:'Play Padel Grendon, Northamptonshire',n:'Play Padel Grendon',area:'Grendon · outdoor',url:'https://playtomic.com/clubs/play-padel-grendon'},
+{id:'overstone',map:'Overstone Padel, Northampton',n:'Overstone Padel',area:'Sywell · indoor',url:'https://playtomic.com/clubs/overstone-padel'},
+{id:'ncltc',map:'Northampton County Lawn Tennis Club, Northampton',n:'Northampton County LTC',area:'Weston Favell · outdoor',url:'https://clubspark.lta.org.uk/NorthamptonCountyLawnTennisClub'},
+{id:'power',map:'Padel Power, Kingsfield, Northampton',n:'Padel Power',area:'Kingsfield · indoor',url:'https://ipadel.co.uk/Court-Info/Padel-Power/3333'},
+{id:'social',map:'Padel Social House, NN4 7EX',n:'Padel Social House',area:'Brackmills · indoor',url:'https://www.google.com/search?q=Padel+Social+House+Northampton+book'},
+{id:'marvel',map:'Marvel Padel, Northampton',n:'Marvel Padel',area:'Northampton · indoor',url:'https://www.google.com/search?q=Marvel+Padel+Northampton+book'},
+{id:'brampton',map:'Brampton Heath Golf and Padel, NN6 8AX',n:'Brampton Heath Padel',area:'Church Brampton · covered',url:'https://www.google.com/search?q=Brampton+Heath+Golf+and+Padel+book'},
+{id:'top',map:'TOP Padel, Northampton',n:'TOP Padel',area:'Northampton · indoor',url:'https://www.google.com/search?q=TOP+Padel+Northampton+book'},
+{id:'uni',map:'Padel People, University of Northampton, NN1 5PH',n:'Padel People (University)',area:'Waterside · NN1',url:'https://www.google.com/search?q=Padel+People+Northampton+University+book'}];
+const $=id=>document.getElementById(id),V=id=>VEN.find(v=>v.id==id)||VEN[0];
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const gbp=n=>'£'+(Math.round(n*100)/100).toFixed(2);
+const ls={get:(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const openMaps=new Set();
+let games=ls.get('games',{}),me=ls.get('name','');
+const enc=g=>btoa(unescape(encodeURIComponent(JSON.stringify(g)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const dec=s=>{try{return JSON.parse(decodeURIComponent(escape(atob(s.replace(/-/g,'+').replace(/_/g,'/')))))}catch(e){return null}};
+const base=()=>ls.get('base','')||(location.protocol.startsWith('http')?location.origin+location.pathname:'');
+const link=g=>(base()||'(set app web address)')+'#g='+enc({...g,j:undefined});
+function toast(t){const e=$('toast');e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>e.hidden=true,3000)}
+function modal(h){const o=document.createElement('div');o.className='ov';o.innerHTML='<div class="md"><button class="cl" aria-label="Close">×</button>'+h+'</div>';o.onclick=e=>{if(e.target==o||e.target.classList.contains('cl'))o.remove()};document.body.appendChild(o);return o}
+function ask(title,label,val,cb,ph){const o=modal(`<h2 style="margin-top:0">${title}</h2><label>${label}</label><input id="q" value="${esc(val)}" placeholder="${ph||''}"><div class="acts"><button class="btn ghost" id="x">Cancel</button><button class="btn" id="o">Save</button></div>`);
+ const i=o.querySelector('#q');i.focus();o.querySelector('#x').onclick=()=>o.remove();o.querySelector('#o').onclick=()=>{const v=i.value.trim().slice(0,20);if(!v)return;o.remove();cb(v)}}
+const need=cb=>me?cb():ask('Your name','Shown to the group','',v=>{me=v;ls.set('name',v);$('who').textContent=v;cb()},'e.g. Sam');
+const fmt=s=>{const d=new Date(s);return d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})+' · '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})};
+const der=g=>{g.j=Object.entries(g.m||{}).filter(e=>e[1][0]).sort((a,b)=>a[1][1]-b[1][1]).map(e=>e[0]);return g};
+const save=g=>{const o=games[g.i],k={...((o&&o.k)||{})};for(const[n,v]of Object.entries(g.k||{}))if(!k[n]||v[1]>k[n][1])k[n]=v;g.k=k;const m={...((o&&o.m)||{})};for(const[n,v]of Object.entries(g.m||{}))if(!m[n]||v[1]>m[n][1])m[n]=v;g.m=m;if(o&&o.cx&&!g.cx)g.cx=o.cx;if(o&&(o.u||0)>(g.u||0))Object.assign(g,{v:o.v,s:o.s,p:o.p,c:o.c,u:o.u});der(g);games[g.i]=g;ls.set('games',games)};
+
+const dirUrl=v=>'https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(v.map);
+function mapHtml(v,nb){return `<div style="margin-top:10px;border-radius:14px;overflow:hidden;border:2px solid rgba(255,255,255,.25)"><iframe title="Map of ${esc(v.n)}" src="https://maps.google.com/maps?q=${encodeURIComponent(v.map)}&output=embed" width="100%" height="190" style="border:0;display:block" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>${nb?'':`<div style="margin-top:8px"><a class="btn sm ghost" href="${dirUrl(v)}" target="_blank" rel="noopener">Directions</a></div>`}`}
+function card(g,full){if(g.cx)return `<div class="card" style="opacity:.75"><div class="when" style="text-decoration:line-through">${fmt(g.s)}</div><div>${esc(V(g.v).n)} · <b style="color:var(--red)">CANCELLED</b></div><div class="acts">${full&&g.by==me?`<button class="btn sm red" data-a="cancel" data-i="${g.i}">Cancel game</button>`:''}<button class="btn sm ghost" data-a="share" data-i="${g.i}">Tell the group</button><button class="btn sm ghost" data-a="rm" data-i="${g.i}">Remove</button></div></div>`;const n=g.j.length,v=V(g.v),pd=x=>x==g.by||!!(g.k&&g.k[x]&&g.k[x][0]),owe=g.j.filter(x=>!pd(x)),each=g.p/Math.max(n,1);
+ return `<div class="card"><div class="when">${fmt(g.s)}</div><div>${esc(v.n)}${g.c?' · '+esc(g.c):''} · 60 min</div>
+ <div class="row"><div class="price">${gbp(g.p/Math.max(n,1))}<small> each now · ${gbp(g.p)} court${n<4?' · '+gbp(g.p/4)+' each if 4':''}${n>4?' · '+n+' rotating':''}</small></div></div>
+ <div>${g.j.map(x=>`<span class="pl ${pd(x)?'':'un'}" ${x==g.by?'':`data-a="paid" data-i="${g.i}" data-n="${esc(x)}"`}>${pd(x)&&x!=g.by?'✓ ':''}${esc(x)}${x==g.by?' · books':''}</span>`).join('')}${'<span class="pl e">free spot</span>'.repeat(Math.max(0,4-n))}</div>${n>1?`<div class="mu" style="margin-top:8px">${owe.length?`Still to pay ${esc(g.by)}: ${owe.map(esc).join(', ')} (${gbp(each)} each)`:'Everyone’s paid up ✓'}</div>`:''}
+ ${openMaps.has(g.i)?mapHtml(v,1):''}<div class="acts">${full?`${g.j.includes(me)?`<button class="btn sm ghost" data-a="out" data-i="${g.i}">I’m out</button>`:`<button class="btn sm" data-a="in" data-i="${g.i}">I’m in</button>`}`:''}
+ ${full&&g.j.includes(me)&&me!=g.by?`<button class="btn sm ghost" data-a="paid" data-i="${g.i}" data-n="${esc(me)}">${pd(me)?'Undo paid':'I’ve paid'}</button>`:''}<button class="btn sm ghost" data-a="share" data-i="${g.i}">Share to WhatsApp</button><a class="btn sm ghost" href="${v.url}" target="_blank" rel="noopener">Book court</a><a class="btn sm ghost" href="${dirUrl(v)}" target="_blank" rel="noopener">Directions</a><button class="btn sm ghost" data-a="map" data-i="${g.i}">${openMaps.has(g.i)?'Hide map':'Map'}</button></div></div>`}
+function share(g){if(g.cx){if(!base())return toast('Set the app web address first');return window.open('https://wa.me/?text='+encodeURIComponent(`❌ Cancelled: padel ${fmt(g.s)} at ${V(g.v).n}\nSee the update: ${link(g)}`),'_blank')}
+ const n=g.j.length,owe=g.j.filter(x=>x!=g.by&&!(g.k&&g.k[x]&&g.k[x][0])),t=`🎾 Padel ${fmt(g.s)} at ${V(g.v).n}\n${gbp(g.p)} court = ${gbp(g.p/Math.max(n,1))} each with ${n} in (organiser books, everyone pays their share)\n${n} in: ${g.j.join(', ')}${owe.length&&n>1?'\nStill to pay '+g.by+': '+owe.join(', '):''}\nTap to join (any number welcome): ${link(g)}`;
+ if(!base())return toast('Set the app web address first (bottom of page)');
+ window.open('https://wa.me/?text='+encodeURIComponent(t),'_blank');navigator.clipboard&&navigator.clipboard.writeText(t).catch(()=>{})}
+function render(){
+ const list=Object.values(games).filter(g=>new Date(g.s).getTime()+36e5>Date.now()).sort((a,b)=>new Date(a.s)-new Date(b.s));
+ $('mine').innerHTML=list.length?list.map(g=>card(g,true)).join(''):'<div class="panel mu">No games yet. Find a slot above, or open a link from the group chat.</div>';
+ const h=location.hash.match(/g=([\w-]+)/),g=h&&dec(h[1]);
+ if(g&&g.i&&g.m&&typeof g.s=='string'){save(g);$('join').innerHTML='<h2 style="margin-top:0">Game invite</h2>'+card(games[g.i],true);history.replaceState(null,'',location.pathname+location.search)}
+}
+document.body.onclick=e=>{const b=e.target.closest('[data-a]');if(!b)return;const g=games[b.dataset.i],a=b.dataset.a;if(!g)return;
+ if(a=='share')return share(g);
+ if(a=='map'){openMaps.has(g.i)?openMaps.delete(g.i):openMaps.add(g.i);return render()}
+ if(a=='rm'){delete games[g.i];ls.set('games',games);render();return toast('Removed')}
+ if(a=='cancel'){if(g.by!=me)return toast('Only '+g.by+' can cancel this game');const o=modal(`<h2>Cancel this game?</h2><p class="sub">It shows as cancelled for everyone once they open your updated link.</p><div class="acts"><button class="btn ghost" id="k">Keep it</button><button class="btn red" id="y">Cancel game</button></div>`);o.querySelector('#k').onclick=()=>o.remove();o.querySelector('#y').onclick=()=>{o.remove();g.cx=Date.now();g.u=Date.now();save(g);render();toast('Game cancelled');share(g)};return}
+ if(g.cx)return toast('This game was cancelled');
+ if(a=='paid')return need(()=>{const w=b.dataset.n;if(w!=me&&me!=g.by)return toast('Only '+g.by+' can mark others as paid');g.k=g.k||{};const was=g.k[w]&&g.k[w][0];g.k[w]=[was?0:1,Date.now()];save(g);render();toast(was?'Marked unpaid':'Marked paid ✓')});
+ need(()=>{
+  g.m=g.m||{};g.m[me]=[a=='in'?1:0,Date.now()];save(g);render();toast(a=='in'?'You’re in! Share the update 👇':'You’re out');if(a=='in')share(g)})};
+
+const z2=n=>String(n).padStart(2,'0'),ymd=d=>d.getFullYear()+'-'+z2(d.getMonth()+1)+'-'+z2(d.getDate());
+let AV=null,selDay=ymd(new Date()),selTod='all';
+const TOD=[['all','Any time'],['am','Morning'],['pm','Afternoon'],['eve','Evening']],RNG={all:[0,24],am:[5,12],pm:[12,17],eve:[17,24]};
+function pills(){let z='';for(let i=0;i<14;i++){const d=new Date(Date.now()+i*864e5),k=ymd(d);z+=`<button class="pill ${k==selDay?'on':''}" data-d="${k}">${d.toLocaleDateString('en-GB',{weekday:'short'})}<small>${d.getDate()} ${d.toLocaleDateString('en-GB',{month:'short'})}</small></button>`}
+ $('days').innerHTML=z;$('tod').innerHTML=TOD.map(([k,l])=>`<button class="pill ${k==selTod?'on':''}" data-o="${k}">${l}</button>`).join('')}
+async function loadAV(){try{const r=await fetch('data/availability.json?'+Date.now());AV=r.ok?await r.json():null}catch(e){AV=null}showRes()}
+function showRes(){pills();
+ if(!AV||!AV.updated){$('res').innerHTML='<p class="mu">No availability data yet. Run the GitHub job, or use the venue links and add a slot manually.</p>';$('health').innerHTML=VEN.map(v=>`<a style="color:var(--lime)" href="${v.url}" target="_blank" rel="noopener">${esc(v.n)}</a>`).join(' · ');return}
+ const mins=Math.round((Date.now()-new Date(AV.updated))/6e4),[a,b]=RNG[selTod],rows=[],live=[],off=[];
+ for(const v of VEN){const vd=AV.venues[v.id];if(!vd||!vd.ok){off.push(v);continue}live.push(v);
+  for(const x of vd.days[selDay]||[]){const h=+x.t.slice(0,2);if(h>=a&&h<b&&new Date(selDay+'T'+x.t)>new Date())rows.push({v,...x})}}
+ rows.sort((p,q)=>p.t.localeCompare(q.t)||p.p-q.p);
+ const ago=mins<2?'just now':mins<90?mins+' min ago':Math.round(mins/60)+' h ago';
+ $('res').innerHTML=(mins>90?'<p class="mu">⚠ This data is '+ago+'. Check before relying on it.</p>':'')+(rows.length?rows.map(r=>`<button class="slot" data-v="${r.v.id}" data-s="${selDay}T${r.t}" data-p="${r.p}"><b>${r.t}</b><span>${esc(r.v.n)}<small>${r.n} court${r.n>1?'s':''} free · ${esc(r.v.area)}</small></span><span class="pp">${gbp(r.p/4)}<small>pp if 4 · ${gbp(r.p)} court</small></span></button>`).join(''):'<p class="mu">Nothing free in that window. Try another day or time.</p>');
+ $('health').innerHTML=`<span class="dot ${mins<60?'g':'a'}"></span>${live.length} venue${live.length==1?'':'s'} live · checked ${ago}. Always confirm on Playtomic.${off.length?'<br><span class="dot"></span>Check yourself: '+off.map(v=>`<a style="color:var(--lime)" href="${v.url}" target="_blank" rel="noopener">${esc(v.n)}</a>`).join(', '):''}`}
+$('days').onclick=e=>{const b=e.target.closest('[data-d]');if(b){selDay=b.dataset.d;showRes()}};
+$('tod').onclick=e=>{const b=e.target.closest('[data-o]');if(b){selTod=b.dataset.o;showRes()}};
+$('res').onclick=e=>{const c=e.target.closest('.slot');if(c)propose(c.dataset.v,c.dataset.s,c.dataset.p)};
+const mm=t=>+t.slice(0,2)*60+ +t.slice(3,5);
+function best(){
+ const d=$('bd').value,t=$('bt').value,out=$('bres');if(!d||!t)return toast('Pick a date and time');
+ if(!AV||!AV.updated){out.innerHTML='<p class="mu">No availability data yet. Run the GitHub job first.</p>';return}
+ const want=mm(t),now=new Date(),all=[],off=[];
+ for(const v of VEN){const vd=AV.venues[v.id];if(!vd||!vd.ok){off.push(v);continue}
+  for(const[k,list]of Object.entries(vd.days))for(const x of list){if(new Date(k+'T'+x.t)<=now)continue;all.push({v,k,...x,dd:Math.round((new Date(k)-new Date(d))/864e5),dm:mm(x.t)-want})}}
+ const lab=r=>{const q=[];if(r.dd)q.push(new Date(r.k+'T12:00').toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'}));if(r.dm){const a=Math.abs(r.dm);q.push((a>=60?+(a/60).toFixed(1)+' h':a+' min')+(r.dm<0?' earlier':' later'))}else if(!r.dd)q.push('exact time');return q.join(' · ')};
+ const row=(r,tag)=>`<button class="slot" data-v="${r.v.id}" data-s="${r.k}T${r.t}" data-p="${r.p}"><b>${r.t}</b><span>${esc(r.v.n)}<small>${tag?'<span style="color:var(--lime)">'+tag+'</span> · ':''}${lab(r)} · ${r.n} court${r.n>1?'s':''} free</small></span><span class="pp">${gbp(r.p/4)}<small>pp if 4 · ${gbp(r.p)} court</small></span></button>`;
+ const exact=all.filter(r=>!r.dd&&!r.dm).sort((a,b)=>a.p-b.p||b.n-a.n);
+ const near=all.filter(r=>!r.dd&&r.dm).sort((a,b)=>Math.abs(a.dm)-Math.abs(b.dm)||a.p-b.p).slice(0,5);
+ const days=all.filter(r=>r.dd&&!r.dm).sort((a,b)=>Math.abs(a.dd)-Math.abs(b.dd)||a.p-b.p).slice(0,3);
+ let h='';
+ if(exact.length)h+=`<h2 style="font-size:22px">Best at ${t}</h2>`+exact.slice(0,4).map((r,i)=>row(r,i?'':'Best pick')).join('')+'<p class="mu">Best pick = cheapest, then most courts free.</p>';
+ else h+=`<p class="mu" style="margin-top:12px"><b style="color:#fff">Nothing free at ${t} on that day</b> at any venue I can check. Closest options:</p>`;
+ if(!exact.length||exact.length<2){if(near.length)h+='<h2 style="font-size:22px">Closest times that day</h2>'+near.map(r=>row(r)).join('');
+  if(days.length)h+='<h2 style="font-size:22px">Same time, other days</h2>'+days.map(r=>row(r)).join('')}
+ if(!all.length)h+='<p class="mu">No slots found. Availability only covers the next 14 days.</p>';
+ if(off.length)h+='<p class="mu" style="margin-top:12px">Couldn’t check: '+off.map(v=>`<a style="color:var(--lime)" href="${v.url}" target="_blank" rel="noopener">${esc(v.n)}</a>`).join(', ')+'</p>';
+ out.innerHTML=h}
+$('bd').value=selDay;$('bgo').onclick=best;
+$('bres').onclick=e=>{const c=e.target.closest('.slot');if(c)propose(c.dataset.v,c.dataset.s,c.dataset.p)};
+$('man').onclick=()=>propose(VEN[0].id,selDay+'T19:00','');
+function propose(vid,s,p){const o=modal(`<h2 style="margin-top:0">Propose a game</h2><label>Venue</label><select id="pv">${VEN.map(v=>`<option value="${v.id}" ${v.id==vid?'selected':''}>${v.n}</option>`).join('')}</select>
+ <div id="pm"></div><div class="g2"><div><label>Start</label><input id="ps" type="datetime-local" value="${s}"></div><div><label>Court price 60 min (£)</label><input id="pp" type="number" step="0.5" min="0" value="${p}"></div></div>
+ <label>Court (optional)</label><input id="pc" placeholder="Padel 1"><div class="acts"><button class="btn ghost" id="x">Cancel</button><button class="btn" id="o">Create &amp; share</button></div>`);
+ o.querySelector('#x').onclick=()=>o.remove();
+ const pm=()=>{o.querySelector('#pm').innerHTML=mapHtml(V(o.querySelector('#pv').value))};o.querySelector('#pv').onchange=pm;pm();
+ o.querySelector('#o').onclick=()=>need(()=>{const q=i=>o.querySelector('#'+i).value,pr=parseFloat(q('pp'));
+  if(!q('ps')||!(pr>0))return toast('Add a time and the court price');
+  const g={i:'g'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),v:q('pv'),s:q('ps'),p:pr,c:q('pc').trim(),by:me,u:Date.now(),m:{[me]:[1,Date.now()]}};
+  save(g);o.remove();render();share(g)})}
+$('who').textContent=me||'not set';
+$('chg').onclick=e=>{e.preventDefault();ask('Your name','Shown to the group',me,v=>{me=v;ls.set('name',v);$('who').textContent=v})};
+$('setb').onclick=e=>{e.preventDefault();ask('App web address','Where this page is hosted, used in shared links',base(),v=>{ls.set('base',v.split('#')[0]);toast('Saved')},'https://you.github.io/padel/')};
+window.onhashchange=render;render();loadAV();
+</script></body></html>
