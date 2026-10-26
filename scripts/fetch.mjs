@@ -15,14 +15,14 @@ const VENUES = [
 
 const DAYS = 14;
 
-// Pull token from environment variable (GitHub Action Secret) or fallback string
-const AUTH_TOKEN = process.env.PLAYTOMIC_TOKEN || '
-/api/clubs/availability?tenant_id=6f0344f0-7631-411b-a4fe-e1231cc15554&date=2026-10-26&sport_id=PADEL';
+// Uses GitHub secret if available, otherwise falls back to your token
+const rawToken = process.env.PLAYTOMIC_TOKEN || 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxNzUwMjQxOSIsInNjb3BlcyI6WyJST0xFX0NVU1RPTUVSIl0sInVzZXJuYW1lIjoicmljaHdpbGRlMTJAZ21haWwuY29tIiwiYXVkIjoiY29tLnBsYXl0b21pYy53ZWIiLCJpc3MiOiJwbGF5dG9taWMiLCJqdGkiOiJiM2YyMjUzZC02YTBkLTQ3NjMtOThkMS0xMjM0MmJjM2Q3MWEiLCJpYXQiOjE3OTMwMzcwMjAsImV4cCI6MTc5MzA0MDYyMH0.3d8eyK2WT4CEbcEyYUX5SS8gr55BFgfBftdxYjbwiUG7QrxoABtr2_jtQBfQ_QFzoGyDayn6KY_kc2X4Og_eIQ';
+const AUTH_TOKEN = rawToken.startsWith('Bearer ') ? rawToken : `Bearer ${rawToken}`;
 
 const H = {
   'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
   'Accept': 'application/json',
-  'Authorization': AUTH_TOKEN.startsWith('Bearer ') ? AUTH_TOKEN : `Bearer ${AUTH_TOKEN}`
+  'Authorization': AUTH_TOKEN
 };
 
 const sleep = ms => new Promise(r => setTimeout(r, ms));
