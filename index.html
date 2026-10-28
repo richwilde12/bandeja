@@ -69,6 +69,13 @@ details summary{cursor:pointer;color:var(--mu);font:800 20px "Barlow Condensed",
 h3.mo{font:800 20px "Barlow Condensed",Impact,sans-serif;text-transform:uppercase;letter-spacing:.04em;color:var(--mu);margin:18px 0 8px}
 #nav button{font-size:17px;padding:12px 6px}
 .ov{z-index:30!important}#toast{z-index:40!important}.md{max-height:90dvh}
+.bdg{display:inline-block;font:800 15px "Barlow Condensed",Impact,sans-serif;letter-spacing:.06em;text-transform:uppercase;border-radius:99px;padding:3px 12px;margin-bottom:8px}
+.bdg.b{background:var(--lime);color:var(--navy)}.bdg.p{background:#ffd166;color:#3a2a00}
+.card.bkd{border:2px solid var(--lime)!important;box-shadow:0 0 0 3px rgba(214,255,63,.18),0 10px 30px rgba(0,0,0,.35)}
+.card.prop{border:2px dashed #ffd166!important;background:linear-gradient(180deg,#0f2a63,#0a1d45)!important}
+#helpb{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:14px;z-index:12;width:42px;height:42px;border-radius:50%;border:2px solid var(--lime);background:rgba(6,22,49,.85);color:var(--lime);font:800 22px "Barlow Condensed",Impact,sans-serif;cursor:pointer;backdrop-filter:blur(6px)}
+.md{overflow-y:auto}.gd details{border-top:1px solid rgba(255,255,255,.14);padding:2px 0}.gd summary{color:#fff;cursor:pointer;font:800 20px "Barlow Condensed",Impact,sans-serif;text-transform:uppercase;letter-spacing:.04em;margin:10px 0}
+.gd li,.gd p{color:#dbe7ff;line-height:1.5;font-size:15px;margin:4px 0}.gd ol,.gd ul{padding-left:20px;margin:4px 0 12px}.gd b{color:#fff}
 </style></head><body><div class="wrap">
 <div style="display:flex;align-items:center;gap:12px"><img src="icon.svg" width="54" height="54" alt=""><h1>Bandeja<span>.</span></h1></div>
 <p class="sub">Northants padel crew. Find a free court, propose a game, share it to WhatsApp, tap in.</p>
@@ -81,13 +88,14 @@ h3.mo{font:800 20px "Barlow Condensed",Impact,sans-serif;text-transform:uppercas
 <label>Club</label><div class="chips" id="fvc"></div><div id="fm"></div>
 <label>Day</label><div class="pk" id="fdc"></div>
 <label>Start time</label><div class="pk" id="fhc"></div><div class="chips" id="fmc"></div><p class="mu" id="fsum" style="margin:8px 0 0"></p>
+<label>Booking length</label><div class="chips" id="fln"></div>
 <label>Players wanted</label><div class="chips" id="ftc"></div>
-<div class="g2"><div><label>Cost for 60 min 🕗 </label><input id="fp" type="number" inputmode="decimal" min="0" step="0.5" placeholder="e.g. 36"></div><div><label>Court (optional)</label><input id="fc" placeholder="Court 2"></div></div>
+<div class="g2"><div><label>Total court price (£)</label><input id="fp" type="number" inputmode="decimal" min="0" step="0.5" placeholder="e.g. 36"></div><div><label>Court (optional)</label><input id="fc" placeholder="Court 2"></div></div>
 <p class="mu" style="margin-top:12px"><b style="color:#fff">You’ll be the booker.</b> Posting means you’ll book this court. Friends add themselves and pay you their share.</p>
 <div class="acts"><button class="btn" id="fpost">Post game</button></div><p class="mu">Next screen: send it to the WhatsApp group.</p></div><div id="res"></div></div>
-<div id="v-games" hidden><div id="join"></div><h2>Games</h2><p class="mu" id="syn" style="margin:-6px 0 12px"></p><div id="mine"></div><div id="past"></div></div><div id="v-hist" hidden></div>
-<p class="mu" style="margin-top:24px">Name: <b id="who"></b> · <a href="#" id="chg" style="color:var(--lime)">change</a> · <a href="#" id="sets" style="color:var(--lime)">shared sheet</a> · <a href="#" id="setb" style="color:var(--lime)">app web address</a></p>
-</div><nav id="nav"><button data-t="games">Games<i id="cnt"></i></button><button data-t="hist">History</button><button data-t="new">+ New game</button></nav><div id="toast" hidden></div>
+<div id="v-games" hidden><div id="join"></div><div id="rate"></div><h2>Games</h2><p class="mu" id="syn" style="margin:-6px 0 12px"></p><div id="mine"></div><div id="past"></div></div><div id="v-hist" hidden></div>
+<p class="mu" style="margin-top:24px">Name: <b id="who"></b> · <a href="#" id="chg" style="color:var(--lime)">change</a> · <a href="#" id="helpl" style="color:var(--lime)">how to use</a></p>
+</div><button id="helpb" aria-label="How to use Bandeja">?</button><nav id="nav"><button data-t="games">Games<i id="cnt"></i></button><button data-t="hist">History</button><button data-t="new">+ New game</button></nav><div id="toast" hidden></div>
 <script>
 const VEN=[
 {id:'ncltc',n:'Northampton County LTC',area:'Weston Favell · outdoor',ct:1,pf:'Playtomic',pr:'£20.80–£28.80',lo:20.8,url:'https://www.playskan.com/clubs/northampton/northampton-county-lawn-tennis-club',map:'Northampton County Lawn Tennis Club, Northampton'},
@@ -116,12 +124,12 @@ function ask(title,label,val,cb,ph,max){const o=modal(`<h2 style="margin-top:0">
 const need=cb=>me?cb():ask('Your name','Shown to the group','',v=>{me=v;ls.set('name',v);$('who').textContent=v;cb()},'e.g. Sam');
 const fmt=s=>{const d=new Date(s);return d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short'})+' · '+d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})};
 const der=g=>{g.j=Object.entries(g.m||{}).filter(e=>e[1][0]).sort((a,b)=>a[1][1]-b[1][1]).map(e=>e[0]);return g};
-const save=g=>{const o=games[g.i],k={...((o&&o.k)||{})};for(const[n,v]of Object.entries(g.k||{}))if(!k[n]||v[1]>k[n][1])k[n]=v;g.k=k;const m={...((o&&o.m)||{})};for(const[n,v]of Object.entries(g.m||{}))if(!m[n]||v[1]>m[n][1])m[n]=v;g.m=m;if(o&&o.cx&&!g.cx)g.cx=o.cx;if(o&&o.bk&&!g.bk)g.bk=o.bk;if(o&&o.pl&&!g.pl)g.pl=o.pl;{const r={...((o&&o.r)||{})};for(const[n,v]of Object.entries(g.r||{}))if(!r[n]||v[1]>r[n][1])r[n]=v;g.r=r}if(o&&(o.u||0)>(g.u||0))Object.assign(g,{t:o.t,v:o.v,s:o.s,p:o.p,c:o.c,u:o.u});der(g);games[g.i]=g;ls.set('games',games);if(!pulling)push(g)};
+const save=g=>{const o=games[g.i],k={...((o&&o.k)||{})};for(const[n,v]of Object.entries(g.k||{}))if(!k[n]||v[1]>k[n][1])k[n]=v;g.k=k;const m={...((o&&o.m)||{})};for(const[n,v]of Object.entries(g.m||{}))if(!m[n]||v[1]>m[n][1])m[n]=v;g.m=m;if(o&&o.cx&&!g.cx)g.cx=o.cx;if(o&&o.bk&&!g.bk)g.bk=o.bk;if(o&&o.pl&&!g.pl)g.pl=o.pl;{const r={...((o&&o.r)||{})};for(const[n,v]of Object.entries(g.r||{}))if(!r[n]||v[1]>r[n][1])r[n]=v;g.r=r}if(o&&(o.u||0)>(g.u||0))Object.assign(g,{d:o.d,t:o.t,v:o.v,s:o.s,p:o.p,c:o.c,u:o.u});der(g);games[g.i]=g;ls.set('games',games);if(!pulling)push(g)};
 
 const dirUrl=v=>'https://www.google.com/maps/dir/?api=1&destination='+encodeURIComponent(v.map);
 function mapHtml(v,nb){return `<div style="margin-top:10px;border-radius:14px;overflow:hidden;border:2px solid rgba(255,255,255,.25)"><iframe title="Map of ${esc(v.n)}" src="https://maps.google.com/maps?q=${encodeURIComponent(v.map)}&output=embed" width="100%" height="190" style="border:0;display:block" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div>${nb?'':`<div style="margin-top:8px"><a class="btn sm ghost" href="${dirUrl(v)}" target="_blank" rel="noopener">Directions</a></div>`}`}
 function card(g,full){if(g.cx)return `<div class="card" data-card="${g.i}" style="opacity:.75"><div class="when" style="text-decoration:line-through">${fmt(g.s)}</div><div>${esc(V(g.v).n)} · <b style="color:var(--red)">CANCELLED</b></div><div class="acts"><button class="btn sm ghost" data-a="share" data-i="${g.i}">Tell the group</button><button class="btn sm ghost" data-a="rm" data-i="${g.i}">Remove</button></div></div>`;const n=g.j.length,v=V(g.v),pd=x=>x==g.by||!!(g.k&&g.k[x]&&g.k[x][0]),owe=g.j.filter(x=>!pd(x)),each=g.p/Math.max(n,1),tg=g.t||4,q=n<=1&&!g.bk&&Date.now()-ctm(g)>1728e5,cc=open(g)?clashOf(g):{r:[],a:[]};
- return `<div class="card${q?' quiet':''}" data-card="${g.i}"><div class="when">${fmt(g.s)}</div><div>${esc(v.n)}${g.c?' · '+esc(g.c):''} · 60 min</div><div style="margin-top:6px">${g.bk?'<b style="color:var(--lime)">✅ Booked by '+esc(g.by)+'</b>':(g.by==me?'<b>⏳ You’re the booker</b> <span class="mu">book it once enough people are in, then tap “I’ve booked it”</span>':'<b>⏳ '+esc(g.by)+' will book this court</b> <span class="mu">once enough people are in</span>')}</div>${q?(g.by==me?'<div class="mu" style="margin-top:6px">🕒 Quiet so far. Still on? Courts go quickly, so book it or cancel.</div>':'<div class="mu" style="margin-top:6px">🕒 Quiet so far</div>'):''}${cc.r.length?'<div class="mu" style="margin-top:6px;color:#ff9a9a">⚠️ Clashes with '+esc(V(cc.r[0].v).n)+', '+fmt(cc.r[0].s)+'</div>':cc.a.length?'<div class="mu" style="margin-top:6px;color:#ffd166">📅 Another game this day</div>':''}
+ return `<div class="card${q?' quiet':''}${g.bk?' bkd':' prop'}" data-card="${g.i}"><div class="bdg ${g.bk?'b':'p'}">${g.bk?'✅ Booked':'⏳ Proposed · '+n+'/'+tg+' in'}</div><div class="when">${fmt(g.s)}</div><div>${esc(v.n)}${g.c?' · '+esc(g.c):''} · ${dur(g)} min</div><div style="margin-top:6px">${g.bk?'<b style="color:var(--lime)">✅ Booked by '+esc(g.by)+'</b>':(g.by==me?'<b>⏳ You’re the booker</b> <span class="mu">book it once enough people are in, then tap “I’ve booked it”</span>':'<b>⏳ '+esc(g.by)+' will book this court</b> <span class="mu">once enough people are in</span>')}</div>${q?(g.by==me?'<div class="mu" style="margin-top:6px">🕒 Quiet so far. Still on? Courts go quickly, so book it or cancel.</div>':'<div class="mu" style="margin-top:6px">🕒 Quiet so far</div>'):''}${cc.r.length?'<div class="mu" style="margin-top:6px;color:#ff9a9a">⚠️ Clashes with '+esc(V(cc.r[0].v).n)+', '+fmt(cc.r[0].s)+'</div>':cc.a.length?'<div class="mu" style="margin-top:6px;color:#ffd166">📅 Another game this day</div>':''}
  <div class="row"><div class="price">${gbp(g.p/Math.max(n,1))}<small> each now · ${gbp(g.p)} court${n<tg?' · '+gbp(g.p/tg)+' each at '+tg:''}${n>tg?' · '+n+' rotating':''}</small></div></div>
  <div>${g.j.map(x=>`<span class="pl ${pd(x)?'':'un'}" ${x==g.by?'':`data-a="paid" data-i="${g.i}" data-n="${esc(x)}"`}>${pd(x)&&x!=g.by?'✓ ':''}${esc(x)}${x==g.by?' · books':''}</span>`).join('')}${'<span class="pl e">free spot</span>'.repeat(Math.max(0,tg-n))}</div>${n>1?`<div class="mu" style="margin-top:8px">${owe.length?`Still to pay ${esc(g.by)}: ${owe.map(esc).join(', ')} (${gbp(each)} each)`:'Everyone’s paid up ✓'}</div>`:''}
  ${ended(g)?rateBlock(g):''}${openMaps.has(g.i)?mapHtml(v,1):''}<div class="acts">${full?`${g.j.includes(me)?`<button class="btn sm ghost" data-a="out" data-i="${g.i}">I’m out</button>`:`<button class="btn sm" data-a="in" data-i="${g.i}">I’m in</button>`}`:''}
@@ -130,16 +138,17 @@ function share(g){if(g.cx){if(!base())return toast('Set the app web address firs
  const n=g.j.length,owe=g.j.filter(x=>x!=g.by&&!(g.k&&g.k[x]&&g.k[x][0])),t=`${g.bk?'✅ Booked':'🎾 Proposed'}: padel ${fmt(g.s)} at ${V(g.v).n}\n${gbp(g.p)} court = ${gbp(g.p/Math.max(n,1))} each with ${n} in (${g.by} books it and everyone pays ${g.by} their share)\n${n}/${g.t||4} in: ${g.j.join(', ')}${owe.length&&n>1?'\nStill to pay '+g.by+': '+owe.join(', '):''}\nTap to join (any number welcome): ${link(g)}`;
  if(!base())return toast('Set the app web address first (bottom of page)');
  window.open('https://wa.me/?text='+encodeURIComponent(t),'_blank');navigator.clipboard&&navigator.clipboard.writeText(t).catch(()=>{})}
-const upc=()=>Object.values(games).filter(g=>!g.cx&&new Date(g.s).getTime()+36e5>Date.now()).sort((a,b)=>new Date(a.s)-new Date(b.s));
-const open=g=>!g.cx&&new Date(g.s).getTime()+36e5>Date.now(),ctm=g=>parseInt(g.i.slice(1,-3),36)||0,dmin=(a,b)=>Math.abs(new Date(a.s)-new Date(b.s))/6e4;
-function clashOf(g,mine){const r=[],a=[];for(const o of Object.values(games)){if(o.i==g.i||!open(o)||(mine&&!(o.j||[]).includes(me)))continue;if(dmin(g,o)<=60)r.push(o);else if(!mine&&g.s.slice(0,10)==o.s.slice(0,10))a.push(o)}return{r,a}}
+const dur=g=>g.d||60,endT=g=>new Date(g.s).getTime()+dur(g)*6e4,overlap=(a,b)=>{const x=+new Date(a.s),y=+new Date(b.s);return x<endT(b)&&y<endT(a)};
+const upc=()=>Object.values(games).filter(g=>!g.cx&&endT(g)>Date.now()).sort((a,b)=>new Date(a.s)-new Date(b.s));
+const open=g=>!g.cx&&endT(g)>Date.now(),ctm=g=>parseInt(g.i.slice(1,-3),36)||0,dmin=(a,b)=>Math.abs(new Date(a.s)-new Date(b.s))/6e4;
+function clashOf(g,mine){const r=[],a=[];for(const o of Object.values(games)){if(o.i==g.i||!open(o)||(mine&&!(o.j||[]).includes(me)))continue;if(dmin(g,o)<=60||overlap(g,o))r.push(o);else if(!mine&&g.s.slice(0,10)==o.s.slice(0,10))a.push(o)}return{r,a}}
 function clashModal({red,list,intro,a,b}){const o=modal(`<h2 style="margin-top:0">${red?'⚠️ Clash':'📅 Another game that day'}</h2><p class="sub">${intro}</p>${list.map(x=>`<div class="pl un" style="display:block;border-radius:14px;margin:6px 0;padding:8px 12px">${fmt(x.s)} · ${esc(V(x.v).n)}<br><small>${esc(x.by)} · ${x.j.length} in</small></div>`).join('')}<div class="acts"><button class="btn ghost" id="ca">${a[0]}</button><button class="btn" id="cb">${b[0]}</button></div>`);o.querySelector('#ca').onclick=()=>{o.remove();a[1]&&a[1]()};o.querySelector('#cb').onclick=()=>{o.remove();b[1]()}}
 function setIn(g,on){g.m=g.m||{};g.m[me]=[on?1:0,Date.now()];save(g);render();toast(on?'You’re in!':'You’re out');if(on){show('games',g.i);sheet('You’re in ✅','Tell the group so '+esc(g.by)+' sees you’ve joined.',g,'Tell the group')}}
 function show(t,hl){$('v-new').hidden=t!='new';$('v-games').hidden=t!='games';$('v-hist').hidden=t!='hist';if(t=='hist')hist();document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('on',b.dataset.t==t));window.scrollTo(0,0);
  if(t=='new'){pickers();setTimeout(ctr,30)}if(hl)setTimeout(()=>{const el=document.querySelector('[data-card="'+hl+'"]');if(el){el.scrollIntoView({behavior:'smooth',block:'center'});el.classList.add('flash')}},80)}
 function ctr(){const e=$('fhc'),o=e&&e.querySelector('.on');if(o)e.scrollLeft=o.offsetLeft-60}
 function sheet(t,msg,g,btn){const o=modal(`<h2 style="margin-top:0">${t}</h2><p class="sub">${msg}</p><div class="acts"><button class="btn ghost" id="sx">Not now</button><button class="btn" id="ss">${btn}</button></div>`);o.querySelector('#sx').onclick=()=>o.remove();o.querySelector('#ss').onclick=()=>{o.remove();share(g)}}
-const ended=g=>new Date(g.s).getTime()+36e5<=Date.now(),played=g=>!g.cx&&(g.bk||g.pl)&&ended(g);
+const ended=g=>endT(g)<=Date.now(),played=g=>!g.cx&&(g.bk||g.pl)&&ended(g);
 const rts=g=>Object.entries(g.r||{}).filter(e=>e[1][0]>0),avg=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:0,f1=n=>n.toFixed(1);
 function venStats(){const o={};VEN.forEach(v=>o[v.id]={v,rs:[],n:0,cost:[]});Object.values(games).filter(played).forEach(g=>{const x=o[g.v];if(!x)return;x.n++;x.cost.push(g.p/Math.max(g.j.length,1));Object.entries(g.r||{}).forEach(([nm,r])=>{if(r[0]>0||r[2])x.rs.push({nm,st:r[0],c:r[2]||'',g})})});Object.values(o).forEach(x=>x.rs=x.rs.filter(r=>r.st>0||r.c));return o}
 const stars=a=>a.filter(r=>r.st>0).map(r=>r.st);
@@ -155,12 +164,15 @@ function hist(){const pl=Object.values(games).filter(played).sort((a,b)=>new Dat
  let mo='';pl.forEach(g=>{const m=new Date(g.s).toLocaleDateString('en-GB',{month:'long',year:'numeric'});if(m!=mo){mo=m;h+=`<h3 class="mo">${m}</h3>`}h+=`<div class="card"><div class="when">${fmt(g.s)}</div><div>${esc(V(g.v).n)}${g.c?' · '+esc(g.c):''}</div><div class="mu" style="margin-top:4px">${g.j.map(esc).join(', ')} · ${gbp(g.p/Math.max(g.j.length,1))} each (court ${gbp(g.p)})</div>${rateBlock(g)}</div>`});
  $('v-hist').innerHTML=h}
 $('v-hist').addEventListener('click',e=>{const b=e.target.closest('[data-club]');if(!b)return;const x=venStats()[b.dataset.club],v=x.v,n=stars(x.rs);const o=modal(`<h2 style="margin-top:0">${esc(v.n)}</h2><p class="sub">${n.length?'★'+f1(avg(n))+' from '+n.length+' rating'+(n.length>1?'s':'')+' · ':''}played ${x.n}× · about ${gbp(avg(x.cost))} each</p>${x.rs.filter(r=>r.c).map(r=>`<div class="mu" style="margin:6px 0">${esc(r.nm)}${r.st?' ★'+r.st:''}, ${fmt(r.g.s)}: “${esc(r.c)}”</div>`).join('')||'<p class="mu">No comments yet.</p>'}<div class="acts"><a class="btn ghost" href="${v.url}" target="_blank" rel="noopener">Club page</a><button class="btn" id="cl">Close</button></div>`);o.querySelector('#cl').onclick=()=>o.remove()});
+const sec=(a,t,c)=>a.length?`<h3 class="mo" style="color:${c}">${t} · ${a.length}</h3>`+a.map(g=>card(g,true)).join(''):'';
 function render(){
  if(!$('v-hist').hidden)hist();
  const list=upc();$('cnt').textContent=list.length||'';
- const pd=$('pd')&&$('pd').open,now=Date.now(),all=Object.values(games).sort((a,b)=>new Date(a.s)-new Date(b.s)),past=all.filter(g=>(g.cx||new Date(g.s).getTime()+36e5<=now)&&new Date(g.s).getTime()+9e7>now);
+ const rt=Object.values(games).filter(g=>!g.cx&&ended(g)&&endT(g)+6048e5>Date.now()&&(played(g)?g.j.includes(me)&&!(g.r&&g.r[me]&&g.r[me][0]):(!g.bk&&!g.pl&&g.by==me))).sort((a,b)=>new Date(b.s)-new Date(a.s));
+ $('rate').innerHTML=rt.length?`<div class="panel" style="border-color:var(--lime)"><b class="big" style="font-size:22px">⭐ Rate your game</b>${rt.map(g=>`<div style="margin-top:12px"><b>${esc(V(g.v).n)}</b> <span class="mu">${fmt(g.s)}</span>${(g.bk||g.pl)?rateBlock(g):`<div class="mu">Did this game go ahead?</div><div class="acts"><button class="btn sm" data-a="played" data-i="${g.i}">Yes, we played</button><button class="btn sm red" data-a="cancel" data-i="${g.i}">It didn’t happen</button></div>`}</div>`).join('')}</div>`:'';
+ const pd=$('pd')&&$('pd').open,now=Date.now(),all=Object.values(games).sort((a,b)=>new Date(a.s)-new Date(b.s)),past=all.filter(g=>(g.cx||endT(g)<=now)&&endT(g)+864e5>now);
  $('past').innerHTML=past.length?`<details id="pd"${pd?' open':''}><summary>Past &amp; cancelled (${past.length})</summary>${past.map(g=>card(g,!!g.cx)).join('')}</details>`:'';
- $('mine').innerHTML=list.length?list.map(g=>card(g,true)).join(''):'<div class="panel mu">No games yet. Tap <b style="color:#fff">+ New game</b> to find a court and propose one, or open a link from the group chat.</div>';
+ $('mine').innerHTML=list.length?sec(list.filter(g=>g.bk),'✅ Booked','var(--lime)')+sec(list.filter(g=>!g.bk),'⏳ Proposed','#ffd166'):'<div class="panel mu">No games yet. Tap <b style="color:#fff">+ New game</b> to find a court and propose one, or open a link from the group chat.</div>';
  const h=location.hash.match(/g=([\w-]+)/),g=h&&dec(h[1]);
  if(g&&g.i&&g.m&&typeof g.s=='string'){const had=!!games[g.i];save(g);history.replaceState(null,'',location.pathname+location.search);render();if(g.cx&&$('pd'))$('pd').open=true;
   $('join').innerHTML=`<div class="panel" style="border-color:var(--lime)">${had?'🔄 Update to a game from':'👋 Invite from'} <b>${esc(g.by)}</b>. ${had?'It’s highlighted below.':'Tap <b>I’m in</b> on the highlighted game to join.'}</div>`;show('games',g.i)}
@@ -180,22 +192,22 @@ document.body.onclick=e=>{const b=e.target.closest('[data-a]');if(!b)return;cons
  need(()=>{if(a=='in'){const c=clashOf(g,1);if(c.r.length)return clashModal({red:1,list:c.r,intro:'You’re already in a game within an hour of this one.',a:['Don’t join'],b:['Join anyway',()=>setIn(g,1)]})}setIn(g,a=='in')})};
 
 const z2=n=>String(n).padStart(2,'0'),ymd=d=>d.getFullYear()+'-'+z2(d.getMonth()+1)+'-'+z2(d.getDate());
-const sel={v:VEN[0].id,d:ymd(new Date(Date.now()+864e5)),h:19,m:0,t:4};
+const sel={v:VEN[0].id,d:ymd(new Date(Date.now()+864e5)),h:19,m:0,t:4,l:60};
 const fmap=()=>{if(fmap.v==sel.v)return;fmap.v=sel.v;const v=V(sel.v);$('fm').innerHTML=`<p class="mu" style="margin:8px 0 0">${esc(v.area)} · typical ${esc(v.pr)} per court per hour</p>`+mapHtml(v)};
 function pickers(){const sc=[...document.querySelectorAll('.pk')].map(e=>e.scrollLeft),chip=(on,k,h)=>`<button type="button" class="chip${on?' on':''}" data-k="${k}">${h}</button>`;
  const vs=venStats();$('fvc').innerHTML=VEN.map(v=>chip(sel.v==v.id,'v:'+v.id,esc(v.n)+(vs[v.id].rs.length?` <small>★${f1(avg(vs[v.id].rs.map(r=>r.st)))}</small>`:''))).join('');
  $('fdc').innerHTML=[...Array(14)].map((_,i)=>{const d=new Date(Date.now()+i*864e5);return chip(sel.d==ymd(d),'d:'+ymd(d),`<b>${d.toLocaleDateString('en-GB',{weekday:'short'})}</b><small>${d.getDate()} ${d.toLocaleDateString('en-GB',{month:'short'})}</small>`)}).join('');
  $('fhc').innerHTML=[...Array(17)].map((_,i)=>i+6).map(h=>chip(sel.h==h,'h:'+h,`<b>${z2(h)}</b>`)).join('');
  $('fmc').innerHTML=[0,15,30,45].map(m=>chip(sel.m==m,'m:'+m,':'+z2(m))).join('');
- $('ftc').innerHTML=[4,5,6,8].map(n=>chip(sel.t==n,'t:'+n,n+' players')).join('');
- $('fsum').innerHTML='<b style="color:#fff">'+fmt(sel.d+'T'+z2(sel.h)+':'+z2(sel.m))+'</b>';
+ $('fln').innerHTML=[30,60,75,90].map(m=>chip(sel.l==m,'l:'+m,m+' min')).join('');$('ftc').innerHTML=[4,5,6,8].map(n=>chip(sel.t==n,'t:'+n,n+' players')).join('');
+ $('fsum').innerHTML='<b style="color:#fff">'+fmt(sel.d+'T'+z2(sel.h)+':'+z2(sel.m))+' · '+sel.l+' min</b>';
  document.querySelectorAll('.pk').forEach((e,i)=>e.scrollLeft=sc[i]||0);fmap()}
 $('v-new').addEventListener('click',e=>{const b=e.target.closest('[data-k]');if(!b)return;const[k,v]=b.dataset.k.split(':');sel[k]=(k=='d'||k=='v')?v:+v;pickers()});
 pickers();
 $('fpost').onclick=()=>need(()=>{const d=sel.d,t=z2(sel.h)+':'+z2(sel.m),price=parseFloat($('fp').value);
  if(new Date(d+'T'+t)<Date.now())return toast('That time has already passed');
  if(!(price>0))return toast('Add the court price you saw on Playskan');
- const g={i:'g'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),v:sel.v,s:d+'T'+t,p:price,t:sel.t,c:$('fc').value.trim(),by:me,u:Date.now(),m:{[me]:[1,Date.now()]}};
+ const g={i:'g'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),v:sel.v,s:d+'T'+t,p:price,t:sel.t,d:sel.l,c:$('fc').value.trim(),by:me,u:Date.now(),m:{[me]:[1,Date.now()]}};
  const c=clashOf(g),L=c.r.length?c.r:c.a,go=()=>{save(g);render();$('fp').value='';$('fc').value='';show('games',g.i);sheet('Game posted ✅','Last step: send it to the WhatsApp group so friends can tap <b>I’m in</b>. You’ll book the court once enough people have joined.',g,'Send to WhatsApp')};
  if(!L.length)return go();
  clashModal({red:!!c.r.length,list:L,intro:c.r.length?'This starts within an hour of a game already on the table. Join that one instead?':'There’s already a game that day. Join it, or post yours anyway?',a:['Join that one',()=>setIn(L[0],1)],b:['Post anyway',go]})});
@@ -216,11 +228,44 @@ async function sync(){const u=sURL();if(!u){const e=$('syn');if(e)e.textContent=
  }catch(e){setSt('Couldn’t reach the shared sheet. Your changes are saved on this phone and will send later.',1)}
  finally{sync.busy=0;if(sync.again){sync.again=0;sync()}}}
 sync.first=1;
-$('sets').onclick=e=>{e.preventDefault();ask('Shared sheet address','Paste the web app address from Google Apps Script',ls.get('sheet','')||SHEET,v=>{ls.set('sheet',v.trim());ls.set('dirty',Object.keys(games));sync();toast('Saved')},'https://script.google.com/macros/s/…/exec',400)};
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync()});setInterval(()=>{if(!document.hidden)sync()},30000);
 $('who').textContent=me||'not set';
 $('chg').onclick=e=>{e.preventDefault();ask('Your name','Shown to the group',me,v=>{me=v;ls.set('name',v);$('who').textContent=v})};
-$('setb').onclick=e=>{e.preventDefault();ask('App web address','Where this page is hosted, used in shared links',base(),v=>{ls.set('base',v.split('#')[0]);toast('Saved')},'https://you.github.io/padel/',400)};
+const GUIDE=`<div class="gd"><h2 style="margin-top:0">How to use Bandeja</h2>
+<details open><summary>Quick start</summary><ol>
+<li>Tap <b>+ New game</b>, then <b>Find a court on Playskan</b>. Pick a green slot and note the club, time and price.</li>
+<li>Come back and choose the club, day, start time, length and players wanted. Enter the court price and tap <b>Post game</b>.</li>
+<li>Tap <b>Send to WhatsApp</b> to tell the group. You are now the booker.</li>
+<li>Friends open the app and tap <b>I’m in</b>. When enough are in, book the court and tap <b>I’ve booked it</b>.</li></ol></details>
+<details><summary>Adding a game</summary><ul>
+<li><b>Price:</b> the total for the booking length you picked (30, 60, 75 or 90 min).</li>
+<li><b>Players wanted:</b> 4, 5, 6 or 8. People can still join past this, handy for a rotating group.</li>
+<li><b>Clash warning:</b> if another game starts within an hour, overlaps, or is on the same day, a pop-up shows it. Choose <b>Join that one</b> or <b>Post anyway</b>.</li>
+<li>Club buttons show the group’s average star rating once games have been rated.</li></ul></details>
+<details><summary>Joining and paying</summary><ul>
+<li>Tap <b>I’m in</b> or <b>I’m out</b>. The cost splits equally between everyone who is in.</li>
+<li>Pay the booker your share, then tap <b>I’ve paid</b>. The booker can tick people off too.</li>
+<li>The card shows who still owes and how much.</li></ul></details>
+<details><summary>If you’re the booker</summary><ul>
+<li>Use <b>Book court</b> to reach the club’s page. Once booked, tap <b>I’ve booked it</b>. The card turns lime and says <b>Booked</b>.</li>
+<li><b>Cancel game</b> is on your card. It shows as cancelled for everyone.</li>
+<li>A game with nobody joining after 48 hours is tagged <b>Quiet</b>. Book it or cancel.</li>
+<li>If a game has ended and you never tapped <b>I’ve booked it</b>, you’ll be asked <b>Did this game go ahead?</b></li></ul></details>
+<details><summary>Colours and labels</summary><ul>
+<li><b>Lime border, ✅ Booked:</b> the court is booked.</li>
+<li><b>Dashed amber, ⏳ Proposed:</b> waiting for players and for the booker to book. It shows how many are in.</li>
+<li><b>Past &amp; cancelled</b> holds finished and cancelled games for a day. <b>Hide</b> removes a game from your own view only.</li></ul></details>
+<details><summary>Ratings and History</summary><ul>
+<li>After a game ends, a <b>Rate your game</b> panel appears at the top of Games. Tap the stars and add a comment if you like.</li>
+<li><b>History</b> lists played games by month with who played and the cost each, plus a <b>Favourite courts</b> ranking. Tap a club for its comments.</li></ul></details>
+<details><summary>Good to know</summary><ul>
+<li>The list updates when you open the app and every 30 seconds. Tap <b>Refresh</b> any time.</li>
+<li>Prices on the club buttons are typical, not live. Always check price and availability on the booking page before paying.</li>
+<li>For an app icon, use <b>Share &gt; Add to Home Screen</b> in Safari.</li>
+<li>Names aren’t verified, so keep the app link inside your group.</li></ul></details>
+<div class="acts"><button class="btn" id="gx">Got it</button></div></div>`;
+function guide(){const o=modal(GUIDE);o.querySelector('#gx').onclick=()=>o.remove()}
+$('helpb').onclick=guide;$('helpl').onclick=e=>{e.preventDefault();guide()};
 document.getElementById('nav').onclick=e=>{const b=e.target.closest('button');if(b){show(b.dataset.t);$('join').innerHTML=''}};
-show(upc().length?'games':'new');window.onhashchange=render;render();sync();
+show(upc().length?'games':'new');const inv=/g=/.test(location.hash);window.onhashchange=render;render();sync();if(!ls.get('seen',0)&&!inv){ls.set('seen',1);setTimeout(guide,700)}
 </script></body></html>
