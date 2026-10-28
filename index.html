@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Bandeja · Northants padel crew</title>
+<title>Bandeja · Northants padel Palz</title>
 <meta name="theme-color" content="#0d3b8c"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="manifest" href="manifest.webmanifest">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Outfit:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -78,7 +78,7 @@ h3.mo{font:800 20px "Barlow Condensed",Impact,sans-serif;text-transform:uppercas
 .gd li,.gd p{color:#dbe7ff;line-height:1.5;font-size:15px;margin:4px 0}.gd ol,.gd ul{padding-left:20px;margin:4px 0 12px}.gd b{color:#fff}
 </style></head><body><div class="wrap">
 <div style="display:flex;align-items:center;gap:12px"><img src="icon.svg" width="54" height="54" alt=""><h1>Bandeja<span>.</span></h1></div>
-<p class="sub">Northants padel crew. Find a free court, propose a game, share it to WhatsApp, tap in.</p>
+<p class="sub">Northants Padel Palz. Find a free court, propose a game, share it to WhatsApp, tap in.</p>
 <div id="v-new"><div class="panel"><b class="big" style="font-size:22px">How it works</b><ol class="hw"><li><b>Find</b> a free court on Playskan</li><li><b>Add</b> it here. You become the booker</li><li><b>Share</b> it to the WhatsApp group</li><li>Friends tap the link and press <b>I’m in</b></li><li>When enough are in, <b>you book it</b> and tap I’ve booked it</li></ol></div>
 <div class="panel"><div class="stp"><span>1</span><h2>Find a free court</h2></div>
 <p class="mu">Open Playskan. Green squares are free times, showing courts free and the price range. Tap one to see which club has it, then note the club, time and price.</p>
@@ -95,6 +95,7 @@ h3.mo{font:800 20px "Barlow Condensed",Impact,sans-serif;text-transform:uppercas
 <div class="acts"><button class="btn" id="fpost">Post game</button></div><p class="mu">Next screen: send it to the WhatsApp group.</p></div><div id="res"></div></div>
 <div id="v-games" hidden><div id="join"></div><div id="rate"></div><h2>Games</h2><p class="mu" id="syn" style="margin:-6px 0 12px"></p><div id="mine"></div><div id="past"></div></div><div id="v-hist" hidden></div>
 <p class="mu" style="margin-top:24px">Name: <b id="who"></b> · <a href="#" id="chg" style="color:var(--lime)">change</a> · <a href="#" id="helpl" style="color:var(--lime)">how to use</a></p>
+<p class="mu" style="margin-top:4px">Bandeja a SlipperyWizzard™ Production</p>
 </div><button id="helpb" aria-label="How to use Bandeja">?</button><nav id="nav"><button data-t="games">Games<i id="cnt"></i></button><button data-t="hist">History</button><button data-t="new">+ New game</button></nav><div id="toast" hidden></div>
 <script>
 const VEN=[
@@ -211,7 +212,7 @@ $('fpost').onclick=()=>need(()=>{const d=sel.d,t=z2(sel.h)+':'+z2(sel.m),price=p
  const c=clashOf(g),L=c.r.length?c.r:c.a,go=()=>{save(g);render();$('fp').value='';$('fc').value='';show('games',g.i);sheet('Game posted ✅','Last step: send it to the WhatsApp group so friends can tap <b>I’m in</b>. You’ll book the court once enough people have joined.',g,'Send to WhatsApp')};
  if(!L.length)return go();
  clashModal({red:!!c.r.length,list:L,intro:c.r.length?'This starts within an hour of a game already on the table. Join that one instead?':'There’s already a game that day. Join it, or post yours anyway?',a:['Join that one',()=>setIn(L[0],1)],b:['Post anyway',go]})});
-const SHEET='https://script.google.com/macros/s/AKfycbzj_TSWnnt_jc6Xus7Z5iy8BepHWo-yRJ5afuJaL3mc_tm25QsZ3Jb1ip6AlmgXz6znig/exec'; // paste your Google Apps Script web app address between the quotes
+const SHEET=''; // paste your Google Apps Script web app address between the quotes
 const sURL=()=>ls.get('sheet','')||SHEET;
 let pulling=0;
 function setSt(t,bad){const e=$('syn');if(!e)return;e.innerHTML=(bad?'⚠️ ':'🟢 ')+t+' · <a href="#" id="rf" style="color:var(--lime)">Refresh</a>';$('rf').onclick=x=>{x.preventDefault();sync()}}
