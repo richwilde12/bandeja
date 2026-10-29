@@ -228,7 +228,7 @@ $('fpost').onclick=()=>need(()=>{const d=sel.d,t=z2(sel.h)+':'+z2(sel.m),price=p
  const c=clashOf(g),L=c.r.length?c.r:c.a,go=()=>{save(g);render();$('fp').value='';$('fc').value='';show('games',g.i);sheet('Game posted ✅','Last step: send it to the WhatsApp group so friends can tap <b>I’m in</b>. You’ll book the court once enough people have joined.',g,'Send to WhatsApp')};
  if(!L.length)return go();
  clashModal({red:!!c.r.length,list:L,intro:c.r.length?'This starts within an hour of a game already on the table. Join that one instead?':'There’s already a game that day. Join it, or post yours anyway?',a:['Join that one',()=>setIn(L[0],1)],b:['Post anyway',go]})});
-const SHEET=''; // paste your Google Apps Script web app address between the quotes
+const SHEET='https://script.google.com/macros/s/AKfycbzj_TSWnnt_jc6Xus7Z5iy8BepHWo-yRJ5afuJaL3mc_tm25QsZ3Jb1ip6AlmgXz6znig/exec'; // paste your Google Apps Script web app address between the quotes
 const sURL=()=>ls.get('sheet','')||SHEET;
 let pulling=0;
 function setSt(t,bad){const e=$('syn');if(!e)return;e.innerHTML=(bad?'⚠️ ':'🟢 ')+t+' · <a href="#" id="rf" style="color:var(--lime)">Refresh</a>';$('rf').onclick=x=>{x.preventDefault();sync()}}
