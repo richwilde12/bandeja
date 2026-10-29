@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>Bandeja · Northants padel Palz</title>
+<title>Bandeja · Northants padel crew</title>
 <meta name="theme-color" content="#0d3b8c"><link rel="icon" href="icon.svg" type="image/svg+xml"><link rel="manifest" href="manifest.webmanifest">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=Outfit:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -76,9 +76,13 @@ h3.mo{font:800 20px "Barlow Condensed",Impact,sans-serif;text-transform:uppercas
 #helpb{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:14px;z-index:12;width:42px;height:42px;border-radius:50%;border:2px solid var(--lime);background:rgba(6,22,49,.85);color:var(--lime);font:800 22px "Barlow Condensed",Impact,sans-serif;cursor:pointer;backdrop-filter:blur(6px)}
 .md{overflow-y:auto}.gd details{border-top:1px solid rgba(255,255,255,.14);padding:2px 0}.gd summary{color:#fff;cursor:pointer;font:800 20px "Barlow Condensed",Impact,sans-serif;text-transform:uppercase;letter-spacing:.04em;margin:10px 0}
 .gd li,.gd p{color:#dbe7ff;line-height:1.5;font-size:15px;margin:4px 0}.gd ol,.gd ul{padding-left:20px;margin:4px 0 12px}.gd b{color:#fff}
-</style></head><body><div class="wrap">
+#gate{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at 70% 8%,#0d3b8c 0,#061631 62%)}#gate[hidden]{display:none}
+.gbox{max-width:380px;text-align:center}.gbox h1{font:800 56px "Barlow Condensed",Impact,sans-serif;color:#fff;margin:8px 0;letter-spacing:.02em}.gbox h1 span{color:var(--lime)}.gbox p{color:#cfdcff;line-height:1.5}
+#gbtn{display:flex;justify-content:center;margin:20px 0 6px;min-height:44px}
+.ov{z-index:70!important}#toast{z-index:80!important}
+</style><script src="https://accounts.google.com/gsi/client" async defer></script></head><body><div class="wrap">
 <div style="display:flex;align-items:center;gap:12px"><img src="icon.svg" width="54" height="54" alt=""><h1>Bandeja<span>.</span></h1></div>
-<p class="sub">Northants Padel Palz. Find a free court, propose a game, share it to WhatsApp, tap in.</p>
+<p class="sub">Northants padel crew. Find a free court, propose a game, share it to WhatsApp, tap in.</p>
 <div id="v-new"><div class="panel"><b class="big" style="font-size:22px">How it works</b><ol class="hw"><li><b>Find</b> a free court on Playskan</li><li><b>Add</b> it here. You become the booker</li><li><b>Share</b> it to the WhatsApp group</li><li>Friends tap the link and press <b>I’m in</b></li><li>When enough are in, <b>you book it</b> and tap I’ve booked it</li></ol></div>
 <div class="panel"><div class="stp"><span>1</span><h2>Find a free court</h2></div>
 <p class="mu">Open Playskan. Green squares are free times, showing courts free and the price range. Tap one to see which club has it, then note the club, time and price.</p>
@@ -94,20 +98,22 @@ h3.mo{font:800 20px "Barlow Condensed",Impact,sans-serif;text-transform:uppercas
 <p class="mu" style="margin-top:12px"><b style="color:#fff">You’ll be the booker.</b> Posting means you’ll book this court. Friends add themselves and pay you their share.</p>
 <div class="acts"><button class="btn" id="fpost">Post game</button></div><p class="mu">Next screen: send it to the WhatsApp group.</p></div><div id="res"></div></div>
 <div id="v-games" hidden><div id="join"></div><div id="rate"></div><h2>Games</h2><p class="mu" id="syn" style="margin:-6px 0 12px"></p><div id="mine"></div><div id="past"></div></div><div id="v-hist" hidden></div>
-<p class="mu" style="margin-top:24px">Name: <b id="who"></b> · <a href="#" id="chg" style="color:var(--lime)">change</a> · <a href="#" id="helpl" style="color:var(--lime)">how to use</a></p>
+<p class="mu" style="margin-top:24px">Name: <b id="who"></b> · <a href="#" id="chg" style="color:var(--lime)">change</a><a href="#" id="out" style="color:var(--lime)" hidden>sign out</a> · <a href="#" id="helpl" style="color:var(--lime)">how to use</a></p>
 <p class="mu" style="margin-top:4px">Bandeja a SlipperyWizzard™ Production</p>
-</div><button id="helpb" aria-label="How to use Bandeja">?</button><nav id="nav"><button data-t="games">Games<i id="cnt"></i></button><button data-t="hist">History</button><button data-t="new">+ New game</button></nav><div id="toast" hidden></div>
+<p class="mu" id="dg" style="margin-top:4px;font-size:12px"></p>
+</div><div id="gate" hidden><div class="gbox"><img src="icon.svg" width="84" height="84" alt=""><h1>BANDEJA<span>.</span></h1><p>Sign in with Google to see and join your group’s games.</p><div id="gbtn"></div><p id="gerr" style="color:#ff9a9a;min-height:1.4em;margin:4px 0"></p><p class="mu" style="font-size:12px">We store your Google email and display name in your group’s Google Sheet. Friends only see your display name, never your email.</p></div></div>
+<button id="helpb" aria-label="How to use Bandeja">?</button><nav id="nav"><button data-t="games">Games<i id="cnt"></i></button><button data-t="hist">History</button><button data-t="new">+ New game</button></nav><div id="toast" hidden></div>
 <script>
 const VEN=[
-{id:'ncltc',n:'Northampton County LTC',area:'Weston Favell · outdoor',ct:1,pf:'Playtomic',pr:'£20.80–£28.80',lo:20.8,url:'https://www.playskan.com/clubs/northampton/northampton-county-lawn-tennis-club',map:'Northampton County Lawn Tennis Club, Northampton'},
-{id:'power',n:'Padel Power',area:'Kingsfield · indoor',ct:9,pf:'Playtomic',pr:'£24–£36',lo:24,url:'https://www.playskan.com/clubs/northampton/padel-power-northampton',map:'Padel Power, Unit 1 Kingsfield Business Park, Gladstone Road, Northampton NN5 7PP'},
-{id:'grendon',n:'Play Padel Grendon',area:'Grendon · outdoor',ct:3,pf:'Playtomic',pr:'£26–£36',lo:26,url:'https://www.playskan.com/clubs/grendon/play-padel-grendon',map:'Play Padel Grendon, Northamptonshire'},
-{id:'brampton',n:'Brampton Heath Padel',area:'Church Brampton · covered',ct:4,pf:'Playtomic',pr:'£28–£34',lo:28,url:'https://www.playskan.com/clubs/brampton/brampton-heath-golf-and-padel',map:'Brampton Heath Golf and Padel, NN6 8AX'},
+{id:'ncltc',n:'Northampton County LTC',area:'Weston Favell · outdoor',ct:1,pf:'Playtomic',pr:'£20.80–£28.80',lo:20.8,url:'https://clubspark.lta.org.uk/NorthamptonCountyLawnTennisClub',map:'Northampton County Lawn Tennis Club, 54b Church Way, Weston Favell, Northampton NN3 3BX'},
+{id:'power',n:'Padel Power',area:'Kingsfield · indoor',ct:9,pf:'Playtomic',pr:'£24–£36',lo:24,url:'https://playtomic.com/tenant/95214d52-1a73-44be-b5f8-7aafee310010',map:'Padel Power, Unit 1 Kingsfield Business Park, Gladstone Road, Northampton NN5 7PP'},
+{id:'grendon',n:'Play Padel Grendon',area:'Grendon · outdoor',ct:3,pf:'Playtomic',pr:'£26–£36',lo:26,url:'https://www.playskan.com/clubs/grendon/play-padel-grendon',map:'Play Padel Grendon, 67 Main Road, Grendon, Northampton NN7 1JW'},
+{id:'brampton',n:'Brampton Heath Padel',area:'Church Brampton · covered',ct:4,pf:'Playtomic',pr:'£28–£34',lo:28,url:'https://www.playskan.com/northampton',map:'Brampton Heath Golf and Padel, NN6 8AX'},
 {id:'overstone',n:'Overstone Padel',area:'Sywell · indoor',ct:2,pf:'Playtomic',pr:'£28–£36',lo:28,url:'https://www.playskan.com/clubs/northampton/overstone-padel',map:'Overstone Padel, 204 Holcot Lane, Sywell, NN6 0BG'},
-{id:'top',n:'TOP Padel',area:'Northampton · indoor',ct:1,pf:'Playtomic',pr:'£30',lo:30,url:'https://www.playskan.com/clubs/northampton/top-padel',map:'TOP Padel, Northampton'},
-{id:'social',n:'Padel Social House',area:'Brackmills · indoor',ct:12,pf:'Playtomic',pr:'£40–£50',lo:40,url:'https://www.playskan.com/clubs/northampton/padel-social-house',map:'Padel Social House, NN4 7EX'},
-{id:'marvel',n:'Marvel Padel',area:'Northampton · indoor',ct:5,pf:'Padel Mates',pr:'£40–£50',lo:40,url:'https://www.playskan.com/clubs/northampton/marvel-padel',map:'Marvel Padel, Northampton'},
-{id:'uni',n:'Padel People (University)',area:'Waterside · NN1',ct:0,pf:'Check site',pr:'varies',lo:99,url:'https://www.google.com/search?q=Padel+People+Northampton+University+book',map:'Padel People, University of Northampton, NN1 5PH'}];
+{id:'top',n:'TOP Padel',area:'Northampton · indoor',ct:1,pf:'Playtomic',pr:'£30',lo:30,url:'https://www.playskan.com/northampton',map:'TOP Padel, Northampton'},
+{id:'social',n:'Padel Social House',area:'Brackmills · indoor',ct:12,pf:'Playtomic',pr:'£40–£50',lo:40,url:'https://www.playskan.com/clubs/northampton/padel-social-house',map:'Padel Social House, Salthouse Road, Brackmills, Northampton NN4 7EX'},
+{id:'marvel',n:'Marvel Padel',area:'Northampton · indoor',ct:5,pf:'Padel Mates',pr:'£40–£50',lo:40,url:'https://www.playskan.com/clubs/northampton/marvel-padel',map:'Marvel Padel, Northampton NN3 9HG'},
+{id:'uni',n:'Padel People (University)',area:'Waterside · NN1',ct:0,pf:'Check site',pr:'varies',lo:99,url:'',map:'Padel People, University of Northampton, NN1 5PH'}];
 const $=id=>document.getElementById(id),V=id=>VEN.find(v=>v.id==id)||VEN[0];
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const gbp=n=>'£'+(Math.round(n*100)/100).toFixed(2);
@@ -134,7 +140,7 @@ function card(g,full){if(g.cx)return `<div class="card" data-card="${g.i}" style
  <div class="row"><div class="price">${gbp(g.p/Math.max(n,1))}<small> each now · ${gbp(g.p)} court${n<tg?' · '+gbp(g.p/tg)+' each at '+tg:''}${n>tg?' · '+n+' rotating':''}</small></div></div>
  <div>${g.j.map(x=>`<span class="pl ${pd(x)?'':'un'}" ${x==g.by?'':`data-a="paid" data-i="${g.i}" data-n="${esc(x)}"`}>${pd(x)&&x!=g.by?'✓ ':''}${esc(x)}${x==g.by?' · books':''}</span>`).join('')}${'<span class="pl e">free spot</span>'.repeat(Math.max(0,tg-n))}</div>${n>1?`<div class="mu" style="margin-top:8px">${owe.length?`Still to pay ${esc(g.by)}: ${owe.map(esc).join(', ')} (${gbp(each)} each)`:'Everyone’s paid up ✓'}</div>`:''}
  ${ended(g)?rateBlock(g):''}${openMaps.has(g.i)?mapHtml(v,1):''}<div class="acts">${full?`${g.j.includes(me)?`<button class="btn sm ghost" data-a="out" data-i="${g.i}">I’m out</button>`:`<button class="btn sm" data-a="in" data-i="${g.i}">I’m in</button>`}`:''}
- ${full&&g.j.includes(me)&&me!=g.by?`<button class="btn sm ghost" data-a="paid" data-i="${g.i}" data-n="${esc(me)}">${pd(me)?'Undo paid':'I’ve paid'}</button>`:''}${full&&g.by==me&&!g.bk?`<button class="btn sm" data-a="booked" data-i="${g.i}">I’ve booked it</button>`:''}<button class="btn sm ghost" data-a="share" data-i="${g.i}">Share to WhatsApp</button><a class="btn sm ghost" href="${v.url}" target="_blank" rel="noopener">Book court</a><a class="btn sm ghost" href="${dirUrl(v)}" target="_blank" rel="noopener">Directions</a><button class="btn sm ghost" data-a="map" data-i="${g.i}">${openMaps.has(g.i)?'Hide map':'Map'}</button>${full&&g.by==me?`<button class="btn sm red" data-a="cancel" data-i="${g.i}">Cancel game</button>`:''}${full&&g.by!=me?`<button class="btn sm ghost" data-a="rm" data-i="${g.i}">Hide</button>`:''}</div></div>`}
+ ${full&&g.j.includes(me)&&me!=g.by?`<button class="btn sm ghost" data-a="paid" data-i="${g.i}" data-n="${esc(me)}">${pd(me)?'Undo paid':'I’ve paid'}</button>`:''}${full&&g.by==me&&!g.bk?`<button class="btn sm" data-a="booked" data-i="${g.i}">I’ve booked it</button>`:''}${g.j.includes(me)&&!ended(g)?`<button class="btn sm" data-a="cal" data-i="${g.i}">📅 Add to calendar</button>`:''}<button class="btn sm ghost" data-a="share" data-i="${g.i}">Share to WhatsApp</button>${v.url?`<a class="btn sm ghost" href="${v.url}" target="_blank" rel="noopener">Book court</a>`:''}<a class="btn sm ghost" href="${dirUrl(v)}" target="_blank" rel="noopener">Directions</a><button class="btn sm ghost" data-a="map" data-i="${g.i}">${openMaps.has(g.i)?'Hide map':'Map'}</button>${full&&g.by==me?`<button class="btn sm red" data-a="cancel" data-i="${g.i}">Cancel game</button>`:''}${full&&g.by!=me?`<button class="btn sm ghost" data-a="rm" data-i="${g.i}">Hide</button>`:''}</div></div>`}
 function share(g){if(g.cx){if(!base())return toast('Set the app web address first');return window.open('https://wa.me/?text='+encodeURIComponent(`❌ Cancelled: padel ${fmt(g.s)} at ${V(g.v).n}\nSee the update: ${link(g)}`),'_blank')}
  const n=g.j.length,owe=g.j.filter(x=>x!=g.by&&!(g.k&&g.k[x]&&g.k[x][0])),t=`${g.bk?'✅ Booked':'🎾 Proposed'}: padel ${fmt(g.s)} at ${V(g.v).n}\n${gbp(g.p)} court = ${gbp(g.p/Math.max(n,1))} each with ${n} in (${g.by} books it and everyone pays ${g.by} their share)\n${n}/${g.t||4} in: ${g.j.join(', ')}${owe.length&&n>1?'\nStill to pay '+g.by+': '+owe.join(', '):''}\nTap to join (any number welcome): ${link(g)}`;
  if(!base())return toast('Set the app web address first (bottom of page)');
@@ -164,8 +170,17 @@ function hist(){const pl=Object.values(games).filter(played).sort((a,b)=>new Dat
  h+=`<p class="mu">${pl.length} game${pl.length>1?'s':''} played${top?` · most games: ${esc(top[0])} (${top[1]})`:''}</p>`;
  let mo='';pl.forEach(g=>{const m=new Date(g.s).toLocaleDateString('en-GB',{month:'long',year:'numeric'});if(m!=mo){mo=m;h+=`<h3 class="mo">${m}</h3>`}h+=`<div class="card"><div class="when">${fmt(g.s)}</div><div>${esc(V(g.v).n)}${g.c?' · '+esc(g.c):''}</div><div class="mu" style="margin-top:4px">${g.j.map(esc).join(', ')} · ${gbp(g.p/Math.max(g.j.length,1))} each (court ${gbp(g.p)})</div>${rateBlock(g)}</div>`});
  $('v-hist').innerHTML=h}
-$('v-hist').addEventListener('click',e=>{const b=e.target.closest('[data-club]');if(!b)return;const x=venStats()[b.dataset.club],v=x.v,n=stars(x.rs);const o=modal(`<h2 style="margin-top:0">${esc(v.n)}</h2><p class="sub">${n.length?'★'+f1(avg(n))+' from '+n.length+' rating'+(n.length>1?'s':'')+' · ':''}played ${x.n}× · about ${gbp(avg(x.cost))} each</p>${x.rs.filter(r=>r.c).map(r=>`<div class="mu" style="margin:6px 0">${esc(r.nm)}${r.st?' ★'+r.st:''}, ${fmt(r.g.s)}: “${esc(r.c)}”</div>`).join('')||'<p class="mu">No comments yet.</p>'}<div class="acts"><a class="btn ghost" href="${v.url}" target="_blank" rel="noopener">Club page</a><button class="btn" id="cl">Close</button></div>`);o.querySelector('#cl').onclick=()=>o.remove()});
+$('v-hist').addEventListener('click',e=>{const b=e.target.closest('[data-club]');if(!b)return;const x=venStats()[b.dataset.club],v=x.v,n=stars(x.rs);const o=modal(`<h2 style="margin-top:0">${esc(v.n)}</h2><p class="sub">${n.length?'★'+f1(avg(n))+' from '+n.length+' rating'+(n.length>1?'s':'')+' · ':''}played ${x.n}× · about ${gbp(avg(x.cost))} each</p>${x.rs.filter(r=>r.c).map(r=>`<div class="mu" style="margin:6px 0">${esc(r.nm)}${r.st?' ★'+r.st:''}, ${fmt(r.g.s)}: “${esc(r.c)}”</div>`).join('')||'<p class="mu">No comments yet.</p>'}<div class="acts">${v.url?`<a class="btn ghost" href="${v.url}" target="_blank" rel="noopener">Club page</a>`:''}<button class="btn" id="cl">Close</button></div>`);o.querySelector('#cl').onclick=()=>o.remove()});
 const sec=(a,t,c)=>a.length?`<h3 class="mo" style="color:${c}">${t} · ${a.length}</h3>`+a.map(g=>card(g,true)).join(''):'';
+const icsT=x=>String(x).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\n/g,'\\n');
+function evt(g){const v=V(g.v),st=new Date(g.s),en=new Date(+st+dur(g)*6e4),n=g.j.length,f=d=>d.toISOString().replace(/[-:]/g,'').replace(/\.\d+/,'');
+ const map='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(v.map);
+ const desc=['Booked by '+g.by+(g.bk?' (court booked)':' (court not booked yet)'),'Players: '+g.j.join(', '),'About '+gbp(g.p/Math.max(n,1))+' each (court '+gbp(g.p)+')','Map: '+map].concat(v.url?['Book / club page: '+v.url]:[]).join('\n');
+ return{st:f(st),en:f(en),title:(g.bk?'':'(Proposed) ')+'Padel at '+v.n,desc,loc:v.map}}
+function icsText(g){const e=evt(g);return['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Bandeja//EN','CALSCALE:GREGORIAN','METHOD:PUBLISH','BEGIN:VEVENT','UID:'+g.i+'@bandeja','DTSTAMP:'+new Date().toISOString().replace(/[-:]/g,'').replace(/\.\d+/,''),'DTSTART:'+e.st,'DTEND:'+e.en,'SUMMARY:'+icsT(e.title),'LOCATION:'+icsT(e.loc),'DESCRIPTION:'+icsT(e.desc),'STATUS:'+(g.bk?'CONFIRMED':'TENTATIVE'),'BEGIN:VALARM','TRIGGER:-PT60M','ACTION:DISPLAY','DESCRIPTION:Padel in 1 hour','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n')}
+function calGo(g){const e=evt(g),gl='https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(e.title)+'&dates='+e.st+'/'+e.en+'&details='+encodeURIComponent(e.desc)+'&location='+encodeURIComponent(e.loc);
+ const o=modal(`<h2 style="margin-top:0">Add to calendar</h2><p class="sub">${esc(e.title)}<br>${fmt(g.s)} · ${dur(g)} min</p><div class="acts"><a class="btn" href="${gl}" target="_blank" rel="noopener">Google Calendar</a><button class="btn ghost" id="ci">Apple / Outlook (.ics)</button></div><p class="mu">If the file doesn’t open from the Home Screen app, open Bandeja in Safari and try again.</p>`);
+ o.querySelector('#ci').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([icsText(g)],{type:'text/calendar;charset=utf-8'}));a.download='padel.ics';document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();o.remove()},1200)}}
 function render(){
  if(!$('v-hist').hidden)hist();
  const list=upc();$('cnt').textContent=list.length||'';
@@ -182,6 +197,7 @@ document.body.onclick=e=>{const b=e.target.closest('[data-a]');if(!b)return;cons
  if(a=='share')return share(g);
  if(a=='map'){openMaps.has(g.i)?openMaps.delete(g.i):openMaps.add(g.i);return render()}
  if(a=='booked'){if(g.by!=me)return toast('Only '+g.by+' can mark this booked');g.bk=Date.now();g.u=Date.now();save(g);render();toast('Marked as booked ✅');return sheet('Booked ✅','Tell the group it’s confirmed so everyone knows to pay you.',g,'Tell the group')}
+ if(a=='cal')return calGo(g);
  if(a=='played'){if(g.by!=me)return toast('Only '+g.by+' can confirm this');g.pl=Date.now();save(g);render();return toast('Logged in History ✅')}
  if(a=='rate'||a=='note'){if(!g.j.includes(me))return toast('Only people who played can rate');const cur=(g.r&&g.r[me])||[0,0,''];
   if(a=='rate'){g.r=g.r||{};g.r[me]=[+b.dataset.n,Date.now(),cur[2]||''];save(g);render();return toast('Rated '+b.dataset.n+' ★')}
@@ -212,25 +228,45 @@ $('fpost').onclick=()=>need(()=>{const d=sel.d,t=z2(sel.h)+':'+z2(sel.m),price=p
  const c=clashOf(g),L=c.r.length?c.r:c.a,go=()=>{save(g);render();$('fp').value='';$('fc').value='';show('games',g.i);sheet('Game posted ✅','Last step: send it to the WhatsApp group so friends can tap <b>I’m in</b>. You’ll book the court once enough people have joined.',g,'Send to WhatsApp')};
  if(!L.length)return go();
  clashModal({red:!!c.r.length,list:L,intro:c.r.length?'This starts within an hour of a game already on the table. Join that one instead?':'There’s already a game that day. Join it, or post yours anyway?',a:['Join that one',()=>setIn(L[0],1)],b:['Post anyway',go]})});
-const SHEET='https://script.google.com/macros/s/AKfycbzj_TSWnnt_jc6Xus7Z5iy8BepHWo-yRJ5afuJaL3mc_tm25QsZ3Jb1ip6AlmgXz6znig/exec'; // paste your Google Apps Script web app address between the quotes
+const SHEET=''; // paste your Google Apps Script web app address between the quotes
 const sURL=()=>ls.get('sheet','')||SHEET;
 let pulling=0;
 function setSt(t,bad){const e=$('syn');if(!e)return;e.innerHTML=(bad?'⚠️ ':'🟢 ')+t+' · <a href="#" id="rf" style="color:var(--lime)">Refresh</a>';$('rf').onclick=x=>{x.preventDefault();sync()}}
 function push(g){const d=new Set(ls.get('dirty',[]));d.add(g.i);ls.set('dirty',[...d]);clearTimeout(push.t);push.t=setTimeout(sync,400)}
+const VER=3,CLIENT_ID=''; // CLIENT_ID: paste your Google client ID (same one as in the Sheet script)
+const AUTH=!!CLIENT_ID;let tok=ls.get('tok','');
+const authed=()=>!AUTH||!!tok;
+function gate(on,msg){$('gate').hidden=!on;$('gerr').textContent=msg||''}
+const post=async body=>(await fetch(sURL(),{method:'POST',body:JSON.stringify(body)})).json();
+async function signin(cred,display){try{const d=await post({action:'login',cred,display});
+ if(d.need==='name'){if(d.err)toast(d.err);return ask('Your name in the group','Friends see this instead of your email',d.suggest||'',v=>signin(cred,v),'e.g. Sam')}
+ if(!d.ok)return gate(1,d.err||'Sign-in failed. Try again.');
+ tok=d.tok;me=d.name;ls.set('tok',tok);ls.set('name',me);$('who').textContent=me;gate(0);sync();if(!ls.get('seen',0)){ls.set('seen',1);setTimeout(guide,600)}}
+ catch(e){gate(1,'Couldn’t reach the shared sheet. Check your connection and try again.')}}
+function gis(){if(!AUTH||tok)return;gate(1);if(!(window.google&&google.accounts))return setTimeout(gis,300);
+ if(!gis.done){gis.done=1;google.accounts.id.initialize({client_id:CLIENT_ID,callback:r=>signin(r.credential),auto_select:true,itp_support:true});google.accounts.id.renderButton($('gbtn'),{theme:'filled_blue',size:'large',shape:'pill',width:260})}}
+function dg(){$('dg').textContent='App v'+VER+' · '+Object.keys(games).length+' games here · '+(sync.n==null?'?':sync.n)+' on the Sheet'}
 async function sync(){const u=sURL();if(!u){const e=$('syn');if(e)e.textContent='Not connected to the shared sheet. Games travel by WhatsApp link only.';return}
+ if(!authed()){gis();return}
  if(sync.busy){sync.again=1;return}sync.busy=1;
- try{const ids=ls.get('dirty',[]),body={games:ids.map(i=>games[i]).filter(Boolean).map(g=>({...g,j:undefined}))};
-  const r=await(body.games.length?fetch(u,{method:'POST',body:JSON.stringify(body)}):fetch(u)),d=await r.json();if(!d.ok)throw 0;
+ try{const ids=ls.get('dirty',[]),d=await post({tok,games:ids.map(i=>games[i]).filter(Boolean).map(g=>({...g,j:undefined}))});
+  if(d.err==='auth'){tok='';ls.set('tok','');gis();gate(1,'Please sign in again.');return}
+  if(!d.ok)throw 0;
+  if(d.ver>VER&&!location.search.includes('v='+d.ver)){location.replace(location.pathname+'?v='+d.ver);return}
   const now=new Set(ls.get('dirty',[]));ids.forEach(i=>now.delete(i));ls.set('dirty',[...now]);
-  const hid=new Set(ls.get('hid',[])),before=JSON.stringify(games);pulling=1;try{d.games.forEach(g=>{if(g&&g.i&&g.m&&!hid.has(g.i))save(g)})}finally{pulling=0}
+  const hid=new Set(ls.get('hid',[])),before=JSON.stringify(games),srv=new Set();
+  pulling=1;try{d.games.forEach(g=>{if(!g||!g.i||!g.m)return;srv.add(g.i);if(hid.has(g.i))return;if(!now.has(g.i))delete games[g.i];save(g)});
+   Object.keys(games).forEach(i=>{if(!srv.has(i)&&!now.has(i))delete games[i]});ls.set('games',games)}finally{pulling=0}
+  sync.n=d.games.length;
   if(JSON.stringify(games)!=before)render();
   if(sync.first){sync.first=0;if(upc().length&&!$('v-new').hidden&&!$('fp').value)show('games')}
-  setSt('Shared list updated '+new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}))
+  setSt('Shared list updated '+new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}));dg()
  }catch(e){setSt('Couldn’t reach the shared sheet. Your changes are saved on this phone and will send later.',1)}
  finally{sync.busy=0;if(sync.again){sync.again=0;sync()}}}
 sync.first=1;
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync()});setInterval(()=>{if(!document.hidden)sync()},30000);
 $('who').textContent=me||'not set';
+$('chg').hidden=AUTH;$('out').hidden=!AUTH;$('out').onclick=e=>{e.preventDefault();tok='';me='';games={};ls.set('tok','');ls.set('name','');ls.set('games',{});ls.set('dirty',[]);$('who').textContent='';render();gis()};
 $('chg').onclick=e=>{e.preventDefault();ask('Your name','Shown to the group',me,v=>{me=v;ls.set('name',v);$('who').textContent=v})};
 const GUIDE=`<div class="gd"><h2 style="margin-top:0">How to use Bandeja</h2>
 <details open><summary>Quick start</summary><ol>
@@ -246,7 +282,7 @@ const GUIDE=`<div class="gd"><h2 style="margin-top:0">How to use Bandeja</h2>
 <details><summary>Joining and paying</summary><ul>
 <li>Tap <b>I’m in</b> or <b>I’m out</b>. The cost splits equally between everyone who is in.</li>
 <li>Pay the booker your share, then tap <b>I’ve paid</b>. The booker can tick people off too.</li>
-<li>The card shows who still owes and how much.</li></ul></details>
+<li>The card shows who still owes and how much.</li><li>Tap <b>Add to calendar</b> on a game you’re in to save it with the address and map link.</li></ul></details>
 <details><summary>If you’re the booker</summary><ul>
 <li>Use <b>Book court</b> to reach the club’s page. Once booked, tap <b>I’ve booked it</b>. The card turns lime and says <b>Booked</b>.</li>
 <li><b>Cancel game</b> is on your card. It shows as cancelled for everyone.</li>
@@ -263,10 +299,10 @@ const GUIDE=`<div class="gd"><h2 style="margin-top:0">How to use Bandeja</h2>
 <li>The list updates when you open the app and every 30 seconds. Tap <b>Refresh</b> any time.</li>
 <li>Prices on the club buttons are typical, not live. Always check price and availability on the booking page before paying.</li>
 <li>For an app icon, use <b>Share &gt; Add to Home Screen</b> in Safari.</li>
-<li>Names aren’t verified, so keep the app link inside your group.</li></ul></details>
+<li>You sign in with Google once. Friends only see your display name, never your email.</li></ul></details>
 <div class="acts"><button class="btn" id="gx">Got it</button></div></div>`;
 function guide(){const o=modal(GUIDE);o.querySelector('#gx').onclick=()=>o.remove()}
 $('helpb').onclick=guide;$('helpl').onclick=e=>{e.preventDefault();guide()};
 document.getElementById('nav').onclick=e=>{const b=e.target.closest('button');if(b){show(b.dataset.t);$('join').innerHTML=''}};
-show(upc().length?'games':'new');const inv=/g=/.test(location.hash);window.onhashchange=render;render();sync();if(!ls.get('seen',0)&&!inv){ls.set('seen',1);setTimeout(guide,700)}
+show(upc().length?'games':'new');const inv=/g=/.test(location.hash);window.onhashchange=render;render();gis();sync();dg();if(!ls.get('seen',0)&&!inv&&authed()){ls.set('seen',1);setTimeout(guide,700)}
 </script></body></html>
