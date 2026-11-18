@@ -242,7 +242,7 @@ const sURL=()=>ls.get('sheet','')||SHEET;
 let pulling=0;
 function setSt(t,bad){const e=$('syn');if(!e)return;e.innerHTML=(bad?'⚠️ ':'🟢 ')+t+' · <a href="#" id="rf" style="color:var(--lime)">Refresh</a>';$('rf').onclick=x=>{x.preventDefault();sync()}}
 function push(g){const d=new Set(ls.get('dirty',[]));d.add(g.i);ls.set('dirty',[...d]);clearTimeout(push.t);push.t=setTimeout(sync,400)}
-const VER=3,CLIENT_ID='https://script.google.com/macros/s/AKfycbzj_TSWnnt_jc6Xus7Z5iy8BepHWo-yRJ5afuJaL3mc_tm25QsZ3Jb1ip6AlmgXz6znig/exec'; // CLIENT_ID: paste your Google client ID (same one as in the Sheet script)
+const VER=3,CLIENT_ID='691220693716-ria2g1v0bu2kkvvuh27n7pv2a1cadjql.apps.googleusercontent.com'; // CLIENT_ID: paste your Google client ID (same one as in the Sheet script)
 const AUTH=!!CLIENT_ID;let tok=ls.get('tok','');
 const authed=()=>!AUTH||!!tok;
 function gate(on,msg){$('gate').hidden=!on;$('gerr').textContent=msg||''}
