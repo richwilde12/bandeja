@@ -87,9 +87,10 @@ h3.mo{font:800 20px "Barlow Condensed",Impact,sans-serif;text-transform:uppercas
 <div class="panel"><div class="stp"><span>1</span><h2>Find a free court</h2></div>
 <p class="mu">Open Playskan. Green squares are free times, showing courts free and the price range. Tap one to see which club has it, then note the club, time and price.</p>
 <div class="acts"><a class="btn" href="https://www.playskan.com/northampton" target="_blank" rel="noopener">Find a court on Playskan</a></div>
-<p class="mu">Done? Come back here for step 2.</p></div>
+<p class="mu">Done? Come back here for step 2. Your choices are saved while you’re away.</p></div>
 <div class="panel"><div class="stp"><span>2</span><h2>Add it to Bandeja</h2></div>
-<label>Club</label><div class="chips" id="fvc"></div><div id="fm"></div>
+<div id="back" class="panel" hidden style="border-color:var(--lime);margin:10px 0 0"><b style="color:var(--lime)">Welcome back.</b> <span class="mu">Enter the price you saw on the booking page, then post.</span></div>
+<label>Club</label><div class="chips" id="fvc"></div><div id="fl"></div><div id="fm"></div>
 <label>Day</label><div class="pk" id="fdc"></div>
 <label>Start time</label><div class="pk" id="fhc"></div><div class="chips" id="fmc"></div><p class="mu" id="fsum" style="margin:8px 0 0"></p>
 <label>Booking length</label><div class="chips" id="fln"></div>
@@ -105,15 +106,15 @@ h3.mo{font:800 20px "Barlow Condensed",Impact,sans-serif;text-transform:uppercas
 <button id="helpb" aria-label="How to use Bandeja">?</button><nav id="nav"><button data-t="games">Games<i id="cnt"></i></button><button data-t="hist">History</button><button data-t="new">+ New game</button></nav><div id="toast" hidden></div>
 <script>
 const VEN=[
-{id:'ncltc',n:'Northampton County LTC',area:'Weston Favell · outdoor',ct:1,pf:'Playtomic',pr:'£20.80–£28.80',lo:20.8,url:'https://playtomic.com/clubs/northampton-county-lawn-tennis-club',map:'Northampton County Lawn Tennis Club, 54b Church Way, Weston Favell, Northampton NN3 3BX'},
-{id:'power',n:'Padel Power',area:'Kingsfield · indoor',ct:9,pf:'Playtomic',pr:'£24–£36',lo:24,url:'https://playtomic.com/clubs/padelpower',map:'Padel Power, Unit 1 Kingsfield Business Park, Gladstone Road, Northampton NN5 7PP'},
-{id:'grendon',n:'Play Padel Grendon',area:'Grendon · outdoor',ct:3,pf:'Playtomic',pr:'£26–£36',lo:26,url:'https://www.playskan.com/clubs/grendon/play-padel-grendon',map:'Play Padel Grendon, 67 Main Road, Grendon, Northampton NN7 1JW'},
-{id:'brampton',n:'Brampton Heath Padel',area:'Church Brampton · covered',ct:4,pf:'Playtomic',pr:'£28–£34',lo:28,url:'https://playtomic.com/clubs/brampton-heath-golf-and-padel',map:'Brampton Heath Golf and Padel, NN6 8AX'},
-{id:'overstone',n:'Overstone Padel',area:'Sywell · indoor',ct:2,pf:'Playtomic',pr:'£28–£36',lo:28,url:'https://www.playskan.com/clubs/northampton/overstone-padel',map:'Overstone Padel, 204 Holcot Lane, Sywell, NN6 0BG'},
-{id:'top',n:'TOP Padel',area:'Northampton · indoor',ct:1,pf:'Playtomic',pr:'£30',lo:30,url:'https://playtomic.com/clubs/the-old-poultry-padel-club',map:'The Old Poultry Farm, Stoke Albany Road, Desborough, Kettering, England, NN14 2SP'},
-{id:'social',n:'Padel Social House',area:'Brackmills · indoor',ct:12,pf:'Playtomic',pr:'£40–£50',lo:40,url:'https://playtomic.com/clubs/padel-social-house',map:'Padel Social House, Salthouse Road, Brackmills, Northampton NN4 7EX'},
-{id:'marvel',n:'Marvel Padel',area:'Northampton · indoor',ct:5,pf:'Padel Mates',pr:'£40–£50',lo:40,url:'https://padelmates.se/club/marvelpadel',map:'Marvel Padel, Northampton NN3 9HG'},
-{id:'uni',n:'Padel People (University)',area:'Waterside · NN1',ct:0,pf:'Check site',pr:'varies',lo:99,url:'https://padelcourtfinder.co.uk/padel-courts/padel-people-northampton-university',map:'Padel People, University of Northampton, NN1 5PH'}];
+{id:'ncltc',n:'Northampton County LTC',area:'Weston Favell · outdoor',ct:1,pf:'Playtomic',pr:'£20.80–£28.80',lo:20.8,ps:'https://www.playskan.com/clubs/northampton/northampton-county-lawn-tennis-club',pt:'https://playtomic.com/clubs/northampton-county-lawn-tennis-club',url:'https://playtomic.com/clubs/northampton-county-lawn-tennis-club',map:'Northampton County Lawn Tennis Club, 54b Church Way, Weston Favell, Northampton NN3 3BX'},
+{id:'power',n:'Padel Power',area:'Kingsfield · indoor',ct:9,pf:'Playtomic',pr:'£24–£36',lo:24,ps:'https://www.playskan.com/clubs/northampton/padel-power-northampton',pt:'https://playtomic.com/clubs/padelpower',url:'https://playtomic.com/clubs/padelpower',map:'Padel Power, Unit 1 Kingsfield Business Park, Gladstone Road, Northampton NN5 7PP'},
+{id:'grendon',n:'Play Padel Grendon',area:'Grendon · outdoor',ct:3,pf:'Playtomic',pr:'£26–£36',lo:26,ps:'https://www.playskan.com/clubs/grendon/play-padel-grendon',pt:'https://playtomic.com/clubs/play-padel-grendon',url:'https://playtomic.com/clubs/play-padel-grendon',map:'Play Padel Grendon, 67 Main Road, Grendon, Northampton NN7 1JW'},
+{id:'brampton',n:'Brampton Heath Padel',area:'Church Brampton · covered',ct:4,pf:'Playtomic',pr:'£28–£34',lo:28,ps:'https://www.playskan.com/clubs/brampton/brampton-heath-golf-and-padel',pt:'https://playtomic.com/clubs/brampton-heath-golf-and-padel',url:'https://playtomic.com/clubs/brampton-heath-golf-and-padel',map:'Brampton Heath Golf and Padel, NN6 8AX'},
+{id:'overstone',n:'Overstone Padel',area:'Sywell · indoor',ct:2,pf:'Playtomic',pr:'£28–£36',lo:28,ps:'https://www.playskan.com/clubs/northampton/overstone-padel',pt:'https://playtomic.com/clubs/overstone-padel',url:'https://playtomic.com/clubs/overstone-padel',map:'Overstone Padel, 204 Holcot Lane, Sywell, NN6 0BG'},
+{id:'top',n:'TOP Padel',area:'Northampton · indoor',ct:1,pf:'Playtomic',pr:'£30',lo:30,ps:'https://www.playskan.com/clubs/northampton/top-padel',pt:'',url:'https://www.playskan.com/clubs/northampton/top-padel',map:'TOP Padel, Northampton'},
+{id:'social',n:'Padel Social House',area:'Brackmills · indoor',ct:12,pf:'Playtomic',pr:'£40–£50',lo:40,ps:'https://www.playskan.com/clubs/northampton/padel-social-house',pt:'https://playtomic.com/clubs/padel-social-house',url:'https://playtomic.com/clubs/padel-social-house',map:'Padel Social House, Salthouse Road, Brackmills, Northampton NN4 7EX'},
+{id:'marvel',n:'Marvel Padel',area:'Northampton · indoor',ct:5,pf:'Padel Mates',pr:'£40–£50',lo:40,ps:'https://www.playskan.com/clubs/northampton/marvel-padel',pt:'',url:'https://www.playskan.com/clubs/northampton/marvel-padel',map:'Marvel Padel, Northampton NN3 9HG'},
+{id:'uni',n:'Padel People (University)',area:'Waterside · NN1',ct:0,pf:'Check site',pr:'varies',lo:99,ps:'',pt:'',url:'',map:'Padel People, University of Northampton, NN1 5PH'}];
 const $=id=>document.getElementById(id),V=id=>VEN.find(v=>v.id==id)||VEN[0];
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const gbp=n=>'£'+(Math.round(n*100)/100).toFixed(2);
@@ -210,7 +211,11 @@ document.body.onclick=e=>{const b=e.target.closest('[data-a]');if(!b)return;cons
 
 const z2=n=>String(n).padStart(2,'0'),ymd=d=>d.getFullYear()+'-'+z2(d.getMonth()+1)+'-'+z2(d.getDate());
 const sel={v:VEN[0].id,d:ymd(new Date(Date.now()+864e5)),h:19,m:0,t:4,l:60};
-const fmap=()=>{if(fmap.v==sel.v)return;fmap.v=sel.v;const v=V(sel.v);$('fm').innerHTML=`<p class="mu" style="margin:8px 0 0">${esc(v.area)} · typical ${esc(v.pr)} per court per hour</p>`+mapHtml(v)};
+{const dr=ls.get('draft',null);if(dr&&dr.sel&&Date.now()-dr.at<12*36e5){Object.assign(sel,dr.sel);if(!VEN.some(v=>v.id==sel.v))sel.v=VEN[0].id;if(sel.d<ymd(new Date()))sel.d=ymd(new Date(Date.now()+864e5));$('fp').value=dr.p||'';$('fc').value=dr.c||''}}
+const keep=()=>ls.set('draft',{sel,p:$('fp').value,c:$('fc').value,at:Date.now()});
+$('fp').addEventListener('input',keep);$('fc').addEventListener('input',keep);
+const lnk=()=>{const v=V(sel.v),a=(u,t)=>u?`<a class="btn sm ghost" data-away="1" href="${u}" target="_blank" rel="noopener">${t}</a>`:'';$('fl').innerHTML=`<div class="acts" style="margin-top:10px">${a(v.ps,'Check slots on Playskan')}${a(v.pt,'Open on Playtomic')}</div>`+(v.pf=='Padel Mates'?'<p class="mu" style="margin:6px 0 0">This club books through Padel Mates. Playskan links you there.</p>':'')+(!v.ps?'<p class="mu" style="margin:6px 0 0">No booking page on Playskan for this club. Check their own site.</p>':'')};
+const fmap=()=>{lnk();if(fmap.v==sel.v)return;fmap.v=sel.v;const v=V(sel.v);$('fm').innerHTML=`<p class="mu" style="margin:8px 0 0">${esc(v.area)} · typical ${esc(v.pr)} per court per hour</p>`+mapHtml(v)};
 function pickers(){const sc=[...document.querySelectorAll('.pk')].map(e=>e.scrollLeft),chip=(on,k,h)=>`<button type="button" class="chip${on?' on':''}" data-k="${k}">${h}</button>`;
  const vs=venStats();$('fvc').innerHTML=VEN.map(v=>chip(sel.v==v.id,'v:'+v.id,esc(v.n)+(vs[v.id].rs.length?` <small>★${f1(avg(vs[v.id].rs.map(r=>r.st)))}</small>`:''))).join('');
  $('fdc').innerHTML=[...Array(14)].map((_,i)=>{const d=new Date(Date.now()+i*864e5);return chip(sel.d==ymd(d),'d:'+ymd(d),`<b>${d.toLocaleDateString('en-GB',{weekday:'short'})}</b><small>${d.getDate()} ${d.toLocaleDateString('en-GB',{month:'short'})}</small>`)}).join('');
@@ -218,14 +223,18 @@ function pickers(){const sc=[...document.querySelectorAll('.pk')].map(e=>e.scrol
  $('fmc').innerHTML=[0,15,30,45].map(m=>chip(sel.m==m,'m:'+m,':'+z2(m))).join('');
  $('fln').innerHTML=[30,60,75,90].map(m=>chip(sel.l==m,'l:'+m,m+' min')).join('');$('ftc').innerHTML=[4,5,6,8].map(n=>chip(sel.t==n,'t:'+n,n+' players')).join('');
  $('fsum').innerHTML='<b style="color:#fff">'+fmt(sel.d+'T'+z2(sel.h)+':'+z2(sel.m))+' · '+sel.l+' min</b>';
- document.querySelectorAll('.pk').forEach((e,i)=>e.scrollLeft=sc[i]||0);fmap()}
+ document.querySelectorAll('.pk').forEach((e,i)=>e.scrollLeft=sc[i]||0);fmap();keep()}
 $('v-new').addEventListener('click',e=>{const b=e.target.closest('[data-k]');if(!b)return;const[k,v]=b.dataset.k.split(':');sel[k]=(k=='d'||k=='v')?v:+v;pickers()});
 pickers();
+let away=0;
+$('v-new').addEventListener('click',e=>{if(e.target.closest('[data-away]')){away=Date.now();keep()}});
+document.addEventListener('visibilitychange',()=>{if(document.hidden||!away||Date.now()-away<4000)return;away=0;if(!$('v-new').hidden&&!$('fp').value){$('back').hidden=false;$('fp').scrollIntoView({block:'center'});$('fp').focus()}});
+$('fp').addEventListener('input',()=>{$('back').hidden=true});
 $('fpost').onclick=()=>need(()=>{const d=sel.d,t=z2(sel.h)+':'+z2(sel.m),price=parseFloat($('fp').value);
  if(new Date(d+'T'+t)<Date.now())return toast('That time has already passed');
  if(!(price>0))return toast('Add the court price you saw on Playskan');
  const g={i:'g'+Date.now().toString(36)+Math.random().toString(36).slice(2,5),v:sel.v,s:d+'T'+t,p:price,t:sel.t,d:sel.l,c:$('fc').value.trim(),by:me,u:Date.now(),m:{[me]:[1,Date.now()]}};
- const c=clashOf(g),L=c.r.length?c.r:c.a,go=()=>{save(g);render();$('fp').value='';$('fc').value='';show('games',g.i);sheet('Game posted ✅','Last step: send it to the WhatsApp group so friends can tap <b>I’m in</b>. You’ll book the court once enough people have joined.',g,'Send to WhatsApp')};
+ const c=clashOf(g),L=c.r.length?c.r:c.a,go=()=>{save(g);render();$('fp').value='';$('fc').value='';ls.set('draft',null);show('games',g.i);sheet('Game posted ✅','Last step: send it to the WhatsApp group so friends can tap <b>I’m in</b>. You’ll book the court once enough people have joined.',g,'Send to WhatsApp')};
  if(!L.length)return go();
  clashModal({red:!!c.r.length,list:L,intro:c.r.length?'This starts within an hour of a game already on the table. Join that one instead?':'There’s already a game that day. Join it, or post yours anyway?',a:['Join that one',()=>setIn(L[0],1)],b:['Post anyway',go]})});
 const SHEET='https://script.google.com/macros/s/AKfycbzj_TSWnnt_jc6Xus7Z5iy8BepHWo-yRJ5afuJaL3mc_tm25QsZ3Jb1ip6AlmgXz6znig/exec'; // paste your Google Apps Script web app address between the quotes
@@ -233,7 +242,7 @@ const sURL=()=>ls.get('sheet','')||SHEET;
 let pulling=0;
 function setSt(t,bad){const e=$('syn');if(!e)return;e.innerHTML=(bad?'⚠️ ':'🟢 ')+t+' · <a href="#" id="rf" style="color:var(--lime)">Refresh</a>';$('rf').onclick=x=>{x.preventDefault();sync()}}
 function push(g){const d=new Set(ls.get('dirty',[]));d.add(g.i);ls.set('dirty',[...d]);clearTimeout(push.t);push.t=setTimeout(sync,400)}
-const VER=1.0,CLIENT_ID=''; // CLIENT_ID: paste your Google client ID (same one as in the Sheet script)
+const VER=3,CLIENT_ID='https://script.google.com/macros/s/AKfycbzj_TSWnnt_jc6Xus7Z5iy8BepHWo-yRJ5afuJaL3mc_tm25QsZ3Jb1ip6AlmgXz6znig/exec'; // CLIENT_ID: paste your Google client ID (same one as in the Sheet script)
 const AUTH=!!CLIENT_ID;let tok=ls.get('tok','');
 const authed=()=>!AUTH||!!tok;
 function gate(on,msg){$('gate').hidden=!on;$('gerr').textContent=msg||''}
@@ -270,7 +279,7 @@ $('chg').hidden=AUTH;$('out').hidden=!AUTH;$('out').onclick=e=>{e.preventDefault
 $('chg').onclick=e=>{e.preventDefault();ask('Your name','Shown to the group',me,v=>{me=v;ls.set('name',v);$('who').textContent=v})};
 const GUIDE=`<div class="gd"><h2 style="margin-top:0">How to use Bandeja</h2>
 <details open><summary>Quick start</summary><ol>
-<li>Tap <b>+ New game</b>, then <b>Find a court on Playskan</b>. Pick a green slot and note the club, time and price.</li>
+<li>Tap <b>+ New game</b>, then <b>Find a court on Playskan</b>. Pick a green slot and note the club, time and price. Or choose a club below and tap <b>Check slots on Playskan</b>.</li>
 <li>Come back and choose the club, day, start time, length and players wanted. Enter the court price and tap <b>Post game</b>.</li>
 <li>Tap <b>Send to WhatsApp</b> to tell the group. You are now the booker.</li>
 <li>Friends open the app and tap <b>I’m in</b>. When enough are in, book the court and tap <b>I’ve booked it</b>.</li></ol></details>
@@ -278,7 +287,7 @@ const GUIDE=`<div class="gd"><h2 style="margin-top:0">How to use Bandeja</h2>
 <li><b>Price:</b> the total for the booking length you picked (30, 60, 75 or 90 min).</li>
 <li><b>Players wanted:</b> 4, 5, 6 or 8. People can still join past this, handy for a rotating group.</li>
 <li><b>Clash warning:</b> if another game starts within an hour, overlaps, or is on the same day, a pop-up shows it. Choose <b>Join that one</b> or <b>Post anyway</b>.</li>
-<li>Club buttons show the group’s average star rating once games have been rated.</li></ul></details>
+<li>Club buttons show the group’s average star rating once games have been rated.</li><li>Your choices are saved while you check slots, so you won’t lose your place when you switch away and come back.</li></ul></details>
 <details><summary>Joining and paying</summary><ul>
 <li>Tap <b>I’m in</b> or <b>I’m out</b>. The cost splits equally between everyone who is in.</li>
 <li>Pay the booker your share, then tap <b>I’ve paid</b>. The booker can tick people off too.</li>
